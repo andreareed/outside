@@ -14,14 +14,16 @@ public class PlayerControls : MonoBehaviour
   [Space]
   [Header("Required References")]
   [SerializeField] Camera playerCamera;
+  [Space]
 
   // Camera Internal Variables
   private float yaw = 0.0f;
   private float pitch = 0.0f;
 
   [Header("Player Movement")]
-  public float walkSpeed = 5f;
-  public float maxVelocityChange = 10f;
+  [SerializeField] float walkSpeed = 5f;
+  [SerializeField] float maxVelocityChange = 10f;
+  [Space]
 
 
   // Movement Internal Variables
@@ -30,6 +32,11 @@ public class PlayerControls : MonoBehaviour
   private float sprintRemaining;
   private bool isSprintCooldown = false;
   private float sprintCooldownReset;
+  [Header("Jumping")]
+  [SerializeField] KeyCode jumpKey = KeyCode.Space;
+  [SerializeField] float jumpPower = 5f;
+
+  // Jump Internal variables
   private bool isGrounded = false;
 
   private void Awake()
@@ -61,6 +68,11 @@ public class PlayerControls : MonoBehaviour
 
     transform.localEulerAngles = new Vector3(0, yaw, 0);
     playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
+
+    if (Input.GetKeyDown(jumpKey) && isGrounded)
+    {
+      Jump();
+    }
   }
 
   private void FixedUpdate()
@@ -103,6 +115,14 @@ public class PlayerControls : MonoBehaviour
     }
   }
 
+  private void Jump()
+  {
+    if (isGrounded)
+    {
+      rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
+      isGrounded = false;
+    }
+  }
 }
 
 
