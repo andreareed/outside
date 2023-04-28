@@ -14,6 +14,7 @@ public class PlayerControls : MonoBehaviour
   // Camera Internal Variables
   private float yaw = 0.0f;
   private float pitch = 0.0f;
+  public bool cameraMovementEnabled = true;
   [Space]
 
   [Header("Player Movement")]
@@ -58,7 +59,7 @@ public class PlayerControls : MonoBehaviour
   [Header("REQUIRED REFERENCES")]
   [SerializeField] Camera playerCamera;
 
-  private void Awake()
+  private void Start()
   {
     rb = GetComponent<Rigidbody>();
 
@@ -77,22 +78,25 @@ public class PlayerControls : MonoBehaviour
     CheckGround();
 
     // Control camera movement
-    yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
-
-    if (!invertCamera)
+    if (cameraMovementEnabled)
     {
-      pitch -= mouseSensitivity * Input.GetAxis("Mouse Y");
-    }
-    else
-    {
-      // Inverted Y
-      pitch += mouseSensitivity * Input.GetAxis("Mouse Y");
-    }
-    // Clamp pitch between lookAngle
-    pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
+      yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
 
-    transform.localEulerAngles = new Vector3(0, yaw, 0);
-    playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
+      if (!invertCamera)
+      {
+        pitch -= mouseSensitivity * Input.GetAxis("Mouse Y");
+      }
+      else
+      {
+        // Inverted Y
+        pitch += mouseSensitivity * Input.GetAxis("Mouse Y");
+      }
+      // Clamp pitch between lookAngle
+      pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
+
+      transform.localEulerAngles = new Vector3(0, yaw, 0);
+      playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
+    }
 
     // Jumping
     if (Input.GetKeyDown(jumpKey) && isGrounded)
@@ -246,6 +250,11 @@ public class PlayerControls : MonoBehaviour
 
       isCrouched = true;
     }
+  }
+
+  public void SetCameraMovement(bool enabled)
+  {
+    cameraMovementEnabled = enabled;
   }
 }
 
