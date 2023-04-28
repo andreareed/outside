@@ -32,12 +32,24 @@ public class PlayerControls : MonoBehaviour
   private float sprintRemaining;
   private bool isSprintCooldown = false;
   private float sprintCooldownReset;
+
   [Header("Jumping")]
   [SerializeField] KeyCode jumpKey = KeyCode.Space;
   [SerializeField] float jumpPower = 5f;
 
   // Jump Internal variables
   private bool isGrounded = false;
+
+  [Header("Crouching")]
+  [SerializeField] bool enableCrouch = true;
+  [SerializeField] bool holdToCrouch = true;
+  [SerializeField] KeyCode crouchKey = KeyCode.LeftControl;
+  [SerializeField] float crouchHeight = .75f;
+  [SerializeField] float speedReduction = .5f;
+
+  // Crouch Internal Variables
+  private bool isCrouched = false;
+  private Vector3 originalScale;
 
   private void Awake()
   {
@@ -69,9 +81,25 @@ public class PlayerControls : MonoBehaviour
     transform.localEulerAngles = new Vector3(0, yaw, 0);
     playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
 
+    // Jumping
     if (Input.GetKeyDown(jumpKey) && isGrounded)
     {
       Jump();
+    }
+
+    // Crouching
+    if (Input.GetKeyDown(crouchKey))
+    {
+      if (holdToCrouch)
+      {
+        isCrouched = false;
+      }
+      Crouch();
+    }
+    if (Input.GetKeyUp(crouchKey) && holdToCrouch)
+    {
+      isCrouched = true;
+      Crouch();
     }
   }
 
@@ -121,6 +149,32 @@ public class PlayerControls : MonoBehaviour
     {
       rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
       isGrounded = false;
+    }
+
+    // When crouched and using toggle system, will uncrouch for a jump
+    if (isCrouched && !holdToCrouch)
+    {
+      Crouch();
+    }
+  }
+
+  private void Crouch()
+  {
+    // Stands player up to full height resets walkSpeed
+    if (isCrouched)
+    {
+      transform.localScale = new Vector3(originalScale.x, originalScale.y, originalScale.z);
+      walkSpeed /= speedReduction;
+
+      isCrouched = false;
+    }
+    // Crouches player down to set height, reduces walkSpeed
+    else
+    {
+      transform.localScale = new Vector3(originalScale.x, crouchHeight, originalScale.z);
+      walkSpeed *= speedReduction;
+
+      isCrouched = true;
     }
   }
 }
