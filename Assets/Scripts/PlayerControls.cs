@@ -19,6 +19,19 @@ public class PlayerControls : MonoBehaviour
   private float yaw = 0.0f;
   private float pitch = 0.0f;
 
+  [Header("Player Movement")]
+  public float walkSpeed = 5f;
+  public float maxVelocityChange = 10f;
+
+
+  // Movement Internal Variables
+  private bool isWalking = false;
+  private bool isSprinting = false;
+  private float sprintRemaining;
+  private bool isSprintCooldown = false;
+  private float sprintCooldownReset;
+  private bool isGrounded = false;
+
   private void Awake()
   {
     rb = GetComponent<Rigidbody>();
@@ -28,6 +41,8 @@ public class PlayerControls : MonoBehaviour
 
   private void Update()
   {
+    CheckGround();
+
     // Control camera movement
     yaw = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
 
@@ -47,5 +62,49 @@ public class PlayerControls : MonoBehaviour
     transform.localEulerAngles = new Vector3(0, yaw, 0);
     playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
   }
+
+  private void FixedUpdate()
+  {
+    // Player Movement
+    float horizontalInput = Input.GetAxis("Horizontal");
+    float verticalInput = Input.GetAxis("Vertical");
+
+    Vector3 targetVelocity = new Vector3(horizontalInput, 0, verticalInput);
+    isWalking = targetVelocity.x != 0 || targetVelocity.z != 0 && isGrounded;
+
+    targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
+
+    // Apply a force that attempts to reach our target velocity
+    Vector3 velocity = rb.velocity;
+    Vector3 velocityChange = (targetVelocity - velocity);
+    velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
+    velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+    velocityChange.y = 0;
+
+    rb.AddForce(velocityChange, ForceMode.VelocityChange);
+    // }
+
+  }
+
+  private void CheckGround()
+  {
+    Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f), transform.position.z);
+    Vector3 direction = transform.TransformDirection(Vector3.down);
+    float distance = .75f;
+
+    if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
+    {
+      Debug.DrawRay(origin, direction * distance, Color.red);
+      isGrounded = true;
+    }
+    else
+    {
+      isGrounded = false;
+    }
+  }
+
 }
+
+
+
 
