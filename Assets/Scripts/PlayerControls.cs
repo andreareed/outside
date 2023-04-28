@@ -12,41 +12,48 @@ public class PlayerControls : MonoBehaviour
   [SerializeField] float mouseSensitivity = 2f;
   [SerializeField] float maxLookAngle = 50f;
   [Space]
+
   [Header("Required References")]
   [SerializeField] Camera playerCamera;
-  [Space]
-
   // Camera Internal Variables
   private float yaw = 0.0f;
   private float pitch = 0.0f;
+  [Space]
 
   [Header("Player Movement")]
   [SerializeField] float walkSpeed = 5f;
   [SerializeField] float maxVelocityChange = 10f;
   [Space]
 
-
+  [Header("Player Sprint")]
+  [SerializeField] bool enableSprint = true;
+  [SerializeField] bool unlimitedSprint = false;
+  [SerializeField] KeyCode sprintKey = KeyCode.LeftShift;
+  [SerializeField] float sprintSpeed = 7f;
+  [SerializeField] float sprintDuration = 5f;
+  [SerializeField] float sprintCooldown = .5f;
+  [SerializeField] float sprintFOV = 80f;
+  [SerializeField] float sprintFOVStepTime = 10f;
   // Movement Internal Variables
   private bool isWalking = false;
   private bool isSprinting = false;
   private float sprintRemaining;
   private bool isSprintCooldown = false;
   private float sprintCooldownReset;
+  [Space]
 
   [Header("Jumping")]
   [SerializeField] KeyCode jumpKey = KeyCode.Space;
   [SerializeField] float jumpPower = 5f;
-
   // Jump Internal variables
   private bool isGrounded = false;
+  [Space]
 
   [Header("Crouching")]
-  [SerializeField] bool enableCrouch = true;
   [SerializeField] bool holdToCrouch = true;
   [SerializeField] KeyCode crouchKey = KeyCode.LeftControl;
   [SerializeField] float crouchHeight = .75f;
   [SerializeField] float speedReduction = .5f;
-
   // Crouch Internal Variables
   private bool isCrouched = false;
   private Vector3 originalScale;
@@ -56,6 +63,13 @@ public class PlayerControls : MonoBehaviour
     rb = GetComponent<Rigidbody>();
 
     playerCamera.fieldOfView = fov;
+    originalScale = transform.localScale;
+
+    if (!unlimitedSprint)
+    {
+      sprintRemaining = sprintDuration;
+      sprintCooldownReset = sprintCooldown;
+    }
   }
 
   private void Update()
@@ -74,7 +88,6 @@ public class PlayerControls : MonoBehaviour
       // Inverted Y
       pitch += mouseSensitivity * Input.GetAxis("Mouse Y");
     }
-
     // Clamp pitch between lookAngle
     pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
 
@@ -101,6 +114,37 @@ public class PlayerControls : MonoBehaviour
       isCrouched = true;
       Crouch();
     }
+
+    // Sprinting
+    if (isSprinting)
+    {
+      playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, sprintFOV, sprintFOVStepTime * Time.deltaTime);
+
+      if (!unlimitedSprint)
+      {
+        sprintRemaining -= 1 * Time.deltaTime;
+        if (sprintRemaining <= 0)
+        {
+          isSprinting = false;
+          isSprintCooldown = true;
+        }
+      }
+    }
+    else
+    {
+      // Sprint regen
+      sprintRemaining = Mathf.Clamp(sprintRemaining += 1 * Time.deltaTime, 0, sprintDuration);
+    }
+
+    if (isSprintCooldown)
+    {
+      sprintCooldown -= 1 * Time.deltaTime;
+      isSprintCooldown = sprintCooldown > 0;
+    }
+    else
+    {
+      sprintCooldown = sprintCooldownReset;
+    }
   }
 
   private void FixedUpdate()
@@ -112,18 +156,44 @@ public class PlayerControls : MonoBehaviour
     Vector3 targetVelocity = new Vector3(horizontalInput, 0, verticalInput);
     isWalking = targetVelocity.x != 0 || targetVelocity.z != 0 && isGrounded;
 
-    targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
+    // Sprinting
+    if (enableSprint && Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown)
+    {
+      targetVelocity = transform.TransformDirection(targetVelocity) * sprintSpeed;
 
-    // Apply a force that attempts to reach our target velocity
-    Vector3 velocity = rb.velocity;
-    Vector3 velocityChange = (targetVelocity - velocity);
-    velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
-    velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
-    velocityChange.y = 0;
+      // Apply a force that attempts to reach our target velocity
+      Vector3 velocity = rb.velocity;
+      Vector3 velocityChange = (targetVelocity - velocity);
+      velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
+      velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+      velocityChange.y = 0;
 
-    rb.AddForce(velocityChange, ForceMode.VelocityChange);
-    // }
+      // Makes sure fov change only happens during movement
+      if (velocityChange.x != 0 || velocityChange.z != 0)
+      {
+        isSprinting = true;
 
+        if (isCrouched)
+        {
+          Crouch();
+        }
+      }
+
+      rb.AddForce(velocityChange, ForceMode.VelocityChange);
+    }
+    else
+    {
+      isSprinting = false;
+      targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
+
+      Vector3 velocity = rb.velocity;
+      Vector3 velocityChange = (targetVelocity - velocity);
+      velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
+      velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+      velocityChange.y = 0;
+
+      rb.AddForce(velocityChange, ForceMode.VelocityChange);
+    }
   }
 
   private void CheckGround()
