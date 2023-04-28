@@ -11,10 +11,6 @@ public class PlayerControls : MonoBehaviour
   [SerializeField] bool invertCamera = false;
   [SerializeField] float mouseSensitivity = 2f;
   [SerializeField] float maxLookAngle = 50f;
-  [Space]
-
-  [Header("Required References")]
-  [SerializeField] Camera playerCamera;
   // Camera Internal Variables
   private float yaw = 0.0f;
   private float pitch = 0.0f;
@@ -57,6 +53,10 @@ public class PlayerControls : MonoBehaviour
   // Crouch Internal Variables
   private bool isCrouched = false;
   private Vector3 originalScale;
+  [Space]
+
+  [Header("REQUIRED REFERENCES")]
+  [SerializeField] Camera playerCamera;
 
   private void Awake()
   {
