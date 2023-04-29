@@ -5,12 +5,15 @@ using UnityEngine;
 public class PlayerControls : MonoBehaviour
 {
   private Rigidbody rb;
+  private PlayerStats playerStats;
 
   [Header("Camera Movement")]
   [SerializeField] float fov = 60f;
   [SerializeField] bool invertCamera = false;
   [SerializeField] float mouseSensitivity = 2f;
   [SerializeField] float maxLookAngle = 50f;
+  [SerializeField] Camera playerCamera;
+
   // Camera Internal Variables
   private float yaw = 0.0f;
   private float pitch = 0.0f;
@@ -23,20 +26,18 @@ public class PlayerControls : MonoBehaviour
   [Space]
 
   [Header("Player Sprint")]
-  [SerializeField] bool enableSprint = true;
   [SerializeField] bool unlimitedSprint = false;
   [SerializeField] KeyCode sprintKey = KeyCode.LeftShift;
   [SerializeField] float sprintSpeed = 7f;
-  [SerializeField] float sprintDuration = 5f;
-  [SerializeField] float sprintCooldown = .5f;
+  [SerializeField] float staminaDrain = 10f;
+  [SerializeField] float sprintRegenDelay = 2f;
   [SerializeField] float sprintFOV = 80f;
   [SerializeField] float sprintFOVStepTime = 10f;
   // Movement Internal Variables
   private bool isWalking = false;
   private bool isSprinting = false;
   private float sprintRemaining;
-  private bool isSprintCooldown = false;
-  private float sprintCooldownReset;
+  private float regenDelay;
   [Space]
 
   [Header("Jumping")]
@@ -54,22 +55,20 @@ public class PlayerControls : MonoBehaviour
   // Crouch Internal Variables
   private bool isCrouched = false;
   private Vector3 originalScale;
-  [Space]
-
-  [Header("REQUIRED REFERENCES")]
-  [SerializeField] Camera playerCamera;
 
   private void Start()
   {
     rb = GetComponent<Rigidbody>();
+    playerStats = GetComponentInChildren<PlayerStats>();
+
 
     playerCamera.fieldOfView = fov;
     originalScale = transform.localScale;
 
     if (!unlimitedSprint)
     {
-      sprintRemaining = sprintDuration;
-      sprintCooldownReset = sprintCooldown;
+      sprintRemaining = playerStats.stamina;
+      regenDelay = sprintRegenDelay;
     }
   }
 
@@ -122,33 +121,34 @@ public class PlayerControls : MonoBehaviour
     // Sprinting
     if (isSprinting)
     {
+      regenDelay = sprintRegenDelay;
       playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, sprintFOV, sprintFOVStepTime * Time.deltaTime);
 
       if (!unlimitedSprint)
       {
         sprintRemaining -= 1 * Time.deltaTime;
+        playerStats.UpdateStamina(-staminaDrain * Time.deltaTime);
         if (sprintRemaining <= 0)
         {
           isSprinting = false;
-          isSprintCooldown = true;
         }
       }
     }
     else
     {
       // Sprint regen
-      sprintRemaining = Mathf.Clamp(sprintRemaining += 1 * Time.deltaTime, 0, sprintDuration);
+      if (regenDelay <= 0)
+      {
+        sprintRemaining = Mathf.Clamp(sprintRemaining += 1 * Time.deltaTime, 0, playerStats.stamina);
+        playerStats.UpdateStamina(staminaDrain * Time.deltaTime);
+      }
+      else
+      {
+        regenDelay -= 1 * Time.deltaTime;
+      }
     }
 
-    if (isSprintCooldown)
-    {
-      sprintCooldown -= 1 * Time.deltaTime;
-      isSprintCooldown = sprintCooldown > 0;
-    }
-    else
-    {
-      sprintCooldown = sprintCooldownReset;
-    }
+
   }
 
   private void FixedUpdate()
@@ -161,7 +161,7 @@ public class PlayerControls : MonoBehaviour
     isWalking = targetVelocity.x != 0 || targetVelocity.z != 0 && isGrounded;
 
     // Sprinting
-    if (enableSprint && Input.GetKey(sprintKey) && sprintRemaining > 0f && !isSprintCooldown)
+    if (Input.GetKey(sprintKey) && sprintRemaining > 0f)
     {
       targetVelocity = transform.TransformDirection(targetVelocity) * sprintSpeed;
 
