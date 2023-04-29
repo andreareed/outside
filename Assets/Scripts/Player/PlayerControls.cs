@@ -29,7 +29,6 @@ public class PlayerControls : MonoBehaviour
   [SerializeField] bool unlimitedSprint = false;
   [SerializeField] KeyCode sprintKey = KeyCode.LeftShift;
   [SerializeField] float sprintSpeed = 7f;
-  [SerializeField] float staminaDrain = 10f;
   [SerializeField] float sprintRegenDelay = 2f;
   [SerializeField] float sprintFOV = 80f;
   [SerializeField] float sprintFOVStepTime = 10f;
@@ -38,6 +37,7 @@ public class PlayerControls : MonoBehaviour
   private bool isSprinting = false;
   private float sprintRemaining;
   private float regenDelay;
+  private float staminaDrain;
   [Space]
 
   [Header("Jumping")]
@@ -60,6 +60,7 @@ public class PlayerControls : MonoBehaviour
   {
     rb = GetComponent<Rigidbody>();
     playerStats = GetComponentInChildren<PlayerStats>();
+    staminaDrain = playerStats.GetStaminaDrain();
 
 
     playerCamera.fieldOfView = fov;
@@ -123,6 +124,8 @@ public class PlayerControls : MonoBehaviour
     {
       regenDelay = sprintRegenDelay;
       playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, sprintFOV, sprintFOVStepTime * Time.deltaTime);
+      // Sprinting drains water
+      playerStats.UpdateWater(-playerStats.GetWaterDrain() * Time.deltaTime);
 
       if (!unlimitedSprint)
       {
