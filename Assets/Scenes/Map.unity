@@ -524,7 +524,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 639875177}
-  - component: {fileID: 639875178}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -552,29 +551,6 @@ Transform:
   m_Father: {fileID: 1776335357}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &639875178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 639875176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59c624c1706f8464dab2719347c14ddb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  maxStamina: 100
-  stamina: 0
-  maxFood: 100
-  maxWater: 100
-  maxWeight: 100
-  healthBar: {fileID: 1107927905}
-  staminaBar: {fileID: 282063915}
-  hungerBar: {fileID: 976363900}
-  thirstBar: {fileID: 804459929}
-  weightBar: {fileID: 172331848}
 --- !u!1 &641689411
 GameObject:
   m_ObjectHideFlags: 0
@@ -1822,6 +1798,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2084542769}
+  - component: {fileID: 2084542771}
   - component: {fileID: 2084542770}
   - component: {fileID: 2084542768}
   - component: {fileID: 2084542767}
@@ -1964,3 +1941,28 @@ MonoBehaviour:
   crouchKey: 306
   crouchHeight: 0.75
   speedReduction: 0.5
+--- !u!114 &2084542771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084542764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c624c1706f8464dab2719347c14ddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  maxStamina: 100
+  stamina: 0
+  maxFood: 100
+  foodDrain: 0.1
+  maxWater: 100
+  waterDrain: 0.1
+  maxWeight: 100
+  healthBar: {fileID: 1107927905}
+  staminaBar: {fileID: 282063915}
+  hungerBar: {fileID: 976363900}
+  thirstBar: {fileID: 804459929}
+  weightBar: {fileID: 172331848}

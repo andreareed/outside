@@ -11,14 +11,17 @@ public class PlayerStats : MonoBehaviour
   [Space]
   [Header("Stamina Settings")]
   [SerializeField] float maxStamina = 100f;
+  [SerializeField] float staminaDrain = 10f;
   public float stamina;
   [Space]
   [Header("Hunger Settings")]
   [SerializeField] float maxFood = 100f;
+  [SerializeField] float foodDrain = .1f;
   private float food;
   [Space]
   [Header("Thirst Settings")]
   [SerializeField] float maxWater = 100f;
+  [SerializeField] float waterDrain = .1f;
   private float water;
   [Space]
   [Header("Weight Settings")]
@@ -45,10 +48,32 @@ public class PlayerStats : MonoBehaviour
   private void Update()
   {
     NormalizeStats();
-    UpdateStats();
+    DrainStats();
+    UpdateStatsUI();
   }
 
-  private void UpdateStats()
+  private void DrainStats()
+  {
+    if (food > 0)
+    {
+      UpdateFood(-foodDrain * Time.deltaTime);
+    }
+    else
+    {
+      UpdateHealth(-foodDrain * Time.deltaTime);
+    }
+
+    if (water > 0)
+    {
+      UpdateWater(-waterDrain * Time.deltaTime);
+    }
+    else
+    {
+      UpdateHealth(-waterDrain * Time.deltaTime);
+    }
+  }
+
+  private void UpdateStatsUI()
   {
     healthBar.bar.fillAmount = health / maxHealth;
     staminaBar.bar.fillAmount = stamina / maxStamina;
@@ -70,6 +95,19 @@ public class PlayerStats : MonoBehaviour
     }
   }
 
+  public float GetStaminaDrain()
+  {
+    return staminaDrain;
+  }
+  public float GetFoodDrain()
+  {
+    return foodDrain;
+  }
+  public float GetWaterDrain()
+  {
+    return waterDrain;
+  }
+
   public void UpdateHealth(float amount)
   {
     health += amount;
@@ -77,7 +115,6 @@ public class PlayerStats : MonoBehaviour
   public void UpdateStamina(float amount)
   {
     stamina += amount;
-    Debug.Log("Stamina: " + stamina);
   }
   public void UpdateFood(float amount)
   {
