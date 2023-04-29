@@ -276,6 +276,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 172331847}
+  - component: {fileID: 172331848}
   m_Layer: 0
   m_Name: Weight
   m_TagString: Untagged
@@ -300,6 +301,20 @@ Transform:
   m_Father: {fileID: 639875177}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &172331848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172331846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 807e75a7c434748bb9d7261144063f4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bar: {fileID: 1153048407}
+  statText: {fileID: 0}
 --- !u!1 &232440838
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,6 +400,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 282063914}
+  - component: {fileID: 282063915}
   m_Layer: 0
   m_Name: Stamina
   m_TagString: Untagged
@@ -409,6 +425,20 @@ Transform:
   m_Father: {fileID: 639875177}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &282063915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282063913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 807e75a7c434748bb9d7261144063f4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bar: {fileID: 232440840}
+  statText: {fileID: 0}
 --- !u!1 &605668783
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,6 +524,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 639875177}
+  - component: {fileID: 639875178}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -521,6 +552,29 @@ Transform:
   m_Father: {fileID: 1776335357}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &639875178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 639875176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59c624c1706f8464dab2719347c14ddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  maxStamina: 100
+  stamina: 0
+  maxFood: 100
+  maxWater: 100
+  maxWeight: 100
+  healthBar: {fileID: 1107927905}
+  staminaBar: {fileID: 282063915}
+  hungerBar: {fileID: 976363900}
+  thirstBar: {fileID: 804459929}
+  weightBar: {fileID: 172331848}
 --- !u!1 &641689411
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,6 +830,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 804459928}
+  - component: {fileID: 804459929}
   m_Layer: 0
   m_Name: Thirst
   m_TagString: Untagged
@@ -800,6 +855,20 @@ Transform:
   m_Father: {fileID: 639875177}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &804459929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 804459927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 807e75a7c434748bb9d7261144063f4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bar: {fileID: 1613353507}
+  statText: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,6 +962,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 976363899}
+  - component: {fileID: 976363900}
   m_Layer: 0
   m_Name: Hunger
   m_TagString: Untagged
@@ -917,6 +987,20 @@ Transform:
   m_Father: {fileID: 639875177}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &976363900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976363898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 807e75a7c434748bb9d7261144063f4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bar: {fileID: 151678094}
+  statText: {fileID: 0}
 --- !u!1 &984362809
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,6 +1199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1107927904}
+  - component: {fileID: 1107927905}
   m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
@@ -1139,6 +1224,20 @@ Transform:
   m_Father: {fileID: 639875177}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1107927905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1107927903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 807e75a7c434748bb9d7261144063f4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bar: {fileID: 1004351165}
+  statText: {fileID: 0}
 --- !u!1 &1153048405
 GameObject:
   m_ObjectHideFlags: 0
@@ -1848,15 +1947,15 @@ MonoBehaviour:
   invertCamera: 0
   mouseSensitivity: 2
   maxLookAngle: 50
+  playerCamera: {fileID: 963194227}
   cameraMovementEnabled: 1
   walkSpeed: 5
   maxVelocityChange: 10
-  enableSprint: 1
   unlimitedSprint: 0
   sprintKey: 304
   sprintSpeed: 7
-  sprintDuration: 5
-  sprintCooldown: 0.5
+  staminaDrain: 10
+  sprintRegenDelay: 2
   sprintFOV: 80
   sprintFOVStepTime: 10
   jumpKey: 32
@@ -1865,4 +1964,3 @@ MonoBehaviour:
   crouchKey: 306
   crouchHeight: 0.75
   speedReduction: 0.5
-  playerCamera: {fileID: 963194227}
