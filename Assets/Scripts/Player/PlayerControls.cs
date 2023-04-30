@@ -59,7 +59,7 @@ public class PlayerControls : MonoBehaviour
   {
     rb = GetComponent<Rigidbody>();
     playerStats = GetComponentInChildren<PlayerStats>();
-    staminaDrain = playerStats.GetStaminaDrain();
+    staminaDrain = playerStats.StaminaDrain;
 
 
     playerCamera.fieldOfView = fov;
@@ -123,7 +123,7 @@ public class PlayerControls : MonoBehaviour
       regenDelay = sprintRegenDelay;
       playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, sprintFOV, sprintFOVStepTime * Time.deltaTime);
       // Sprinting drains water
-      playerStats.UpdateWater(-playerStats.GetWaterDrain() * Time.deltaTime);
+      playerStats.UpdateWater(-playerStats.WaterDrain * Time.deltaTime);
 
       if (!unlimitedSprint)
       {

@@ -35,6 +35,16 @@ public class PlayerStats : MonoBehaviour
   [SerializeField] StatBar thirstBar;
   [SerializeField] StatBar weightBar;
 
+  // Public Getters
+  public float Health => health;
+  public float Stamina => stamina;
+  public float Food => food;
+  public float Water => water;
+  public float Weight => weight;
+  public float StaminaDrain => staminaDrain;
+  public float FoodDrain => foodDrain;
+  public float WaterDrain => waterDrain;
+
 
   private void Start()
   {
@@ -93,19 +103,6 @@ public class PlayerStats : MonoBehaviour
     {
       weight = 0;
     }
-  }
-
-  public float GetStaminaDrain()
-  {
-    return staminaDrain;
-  }
-  public float GetFoodDrain()
-  {
-    return foodDrain;
-  }
-  public float GetWaterDrain()
-  {
-    return waterDrain;
   }
 
   public void UpdateHealth(float amount)
