@@ -84,10 +84,10 @@ public class PlayerStats : MonoBehaviour
 
   private void NormalizeStats()
   {
-    Mathf.Clamp(health, 0, maxHealth);
-    Mathf.Clamp(stamina, 0, maxStamina);
-    Mathf.Clamp(food, 0, maxFood);
-    Mathf.Clamp(water, 0, maxWater);
+    health = Mathf.Clamp(health, 0, maxHealth);
+    stamina = Mathf.Clamp(stamina, 0, maxStamina);
+    food = Mathf.Clamp(food, 0, maxFood);
+    water = Mathf.Clamp(water, 0, maxWater);
     // Don't clamp weight, can go over max
     if (weight < 0)
     {
