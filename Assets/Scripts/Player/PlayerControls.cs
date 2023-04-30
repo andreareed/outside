@@ -35,7 +35,6 @@ public class PlayerControls : MonoBehaviour
   // Movement Internal Variables
   private bool isWalking = false;
   private bool isSprinting = false;
-  private float sprintRemaining;
   private float regenDelay;
   private float staminaDrain;
   [Space]
@@ -68,7 +67,6 @@ public class PlayerControls : MonoBehaviour
 
     if (!unlimitedSprint)
     {
-      sprintRemaining = playerStats.stamina;
       regenDelay = sprintRegenDelay;
     }
   }
@@ -129,9 +127,8 @@ public class PlayerControls : MonoBehaviour
 
       if (!unlimitedSprint)
       {
-        sprintRemaining -= 1 * Time.deltaTime;
         playerStats.UpdateStamina(-staminaDrain * Time.deltaTime);
-        if (sprintRemaining <= 0)
+        if (playerStats.stamina <= 0)
         {
           isSprinting = false;
         }
@@ -142,7 +139,6 @@ public class PlayerControls : MonoBehaviour
       // Sprint regen
       if (regenDelay <= 0)
       {
-        sprintRemaining = Mathf.Clamp(sprintRemaining += 1 * Time.deltaTime, 0, playerStats.stamina);
         playerStats.UpdateStamina(staminaDrain * Time.deltaTime);
       }
       else
@@ -164,7 +160,7 @@ public class PlayerControls : MonoBehaviour
     isWalking = targetVelocity.x != 0 || targetVelocity.z != 0 && isGrounded;
 
     // Sprinting
-    if (Input.GetKey(sprintKey) && sprintRemaining > 0f)
+    if (Input.GetKey(sprintKey) && playerStats.stamina > 0f)
     {
       targetVelocity = transform.TransformDirection(targetVelocity) * sprintSpeed;
 
