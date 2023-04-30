@@ -9,8 +9,9 @@ public class Slot : MonoBehaviour
   private ItemSO item;
   private int stackSize;
   [Space]
-  private Image icon;
-  private Text stackText;
+  [Header("Required References")]
+  [SerializeField] Image icon;
+  [SerializeField] Text stackText;
 
   private bool isEmpty;
   public bool IsEmpty => isEmpty;

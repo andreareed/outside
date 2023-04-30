@@ -12,7 +12,7 @@ public class InventoryManager : MonoBehaviour
   [SerializeField] Transform slotContainer;
 
   private Slot[] inventorySlots;
-  private Slot[] allSlots;
+  [SerializeField] Slot[] allSlots;
 
 
   private void Start()
