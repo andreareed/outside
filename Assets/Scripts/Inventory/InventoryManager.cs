@@ -40,4 +40,9 @@ public class InventoryManager : MonoBehaviour
     inventorySlots = inventorySlotList.ToArray();
     allSlots = slotList.ToArray();
   }
+
+  public void AddItem(Interactable item)
+  {
+    Debug.Log("adding item");
+  }
 }

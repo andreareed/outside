@@ -9,14 +9,14 @@ public class ItemSO : ScriptableObject
   public enum ItemType { Generic, Consumable, Weapon }
 
   [Header("General")]
-  private ItemType itemType;
-  private Sprite icon;
-  private string itemName;
-  private string description;
+  [SerializeField] ItemType itemType;
+  [SerializeField] Sprite icon;
+  [SerializeField] string itemName;
+  [SerializeField] string description;
   [Space]
   [Header("Item Stacking")]
-  private bool isStackable = false;
-  private int maxStack = 1;
+  [SerializeField] bool isStackable = false;
+  [SerializeField] int maxStack = 1;
 
 
   // Public getters

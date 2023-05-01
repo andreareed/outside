@@ -1099,6 +1099,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Player Camera
   m_TagString: MainCamera
@@ -1172,6 +1173,20 @@ Transform:
   m_Father: {fileID: 2084542769}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2366899456ef94b028094ec5fa177d27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactionRange: 2
+  interactionKey: 101
 --- !u!1 &976363898
 GameObject:
   m_ObjectHideFlags: 0
@@ -1381,7 +1396,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1095098557}
-  - component: {fileID: 1095098558}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -1411,22 +1425,6 @@ RectTransform:
   m_AnchoredPosition: {x: -266.57248, y: -2.0664}
   m_SizeDelta: {x: 492.6262, y: 555.9974}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1095098558
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1095098556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 635013c7fa224472196e8e45a0981b1f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inventorySize: 56
-  slotTemplate: {fileID: 4128577381019669105, guid: 7d81300f909924dc2b1e3aa447a661c7, type: 3}
-  slotContainer: {fileID: 691840521}
-  allSlots: []
 --- !u!1 &1107927903
 GameObject:
   m_ObjectHideFlags: 0
@@ -2149,7 +2147,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1776335357
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2334,6 +2332,7 @@ GameObject:
   - component: {fileID: 2084542769}
   - component: {fileID: 2084542771}
   - component: {fileID: 2084542770}
+  - component: {fileID: 2084542773}
   - component: {fileID: 2084542768}
   - component: {fileID: 2084542767}
   - component: {fileID: 2084542766}
@@ -2500,6 +2499,27 @@ MonoBehaviour:
   hungerBar: {fileID: 976363900}
   thirstBar: {fileID: 804459929}
   weightBar: {fileID: 172331848}
+--- !u!114 &2084542773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2084542764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 635013c7fa224472196e8e45a0981b1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventorySize: 56
+  slotTemplate: {fileID: 4128577381019669105, guid: 7d81300f909924dc2b1e3aa447a661c7, type: 3}
+  slotContainer: {fileID: 691840521}
+  allSlots: []
+--- !u!1 &919132148913538119 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 95345690253096084, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
+  m_PrefabInstance: {fileID: 978360529175474387}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &978360529175474387
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2557,3 +2577,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
+--- !u!114 &3469287836683686233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132148913538119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4781866e0b9044628243b3ac86eaa69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: da54aa446df784c238429d6fceed3ac2, type: 2}
+  stackSize: 1
