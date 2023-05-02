@@ -75,6 +75,17 @@ public class ItemSOEditor : Editor
     EditorGUILayout.PropertyField(serializedObject.FindProperty("icon"));
     EditorGUILayout.PropertyField(serializedObject.FindProperty("itemName"));
     EditorGUILayout.PropertyField(serializedObject.FindProperty("description"));
+
+    if (serializedObject.FindProperty("icon").objectReferenceValue != null)
+    {
+      EditorGUILayout.Space();
+      GUILayout.Label("Icon Preview:", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleLeft, fontSize = 12 });
+      EditorGUILayout.Space();
+      Texture2D texture = AssetPreview.GetAssetPreview(serializedObject.FindProperty("icon").objectReferenceValue);
+
+      GUILayout.Label("", GUILayout.Height(60), GUILayout.Width(60));
+      GUI.DrawTexture(GUILayoutUtility.GetLastRect(), texture);
+    }
     EditorGUILayout.Space();
     EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
     EditorGUILayout.Space();
