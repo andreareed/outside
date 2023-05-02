@@ -12,9 +12,12 @@ public class Slot : MonoBehaviour
   [Header("Required References")]
   [SerializeField] Image icon;
   [SerializeField] Text stackText;
-
   private bool isEmpty;
+
+  // Public getters
   public bool IsEmpty => isEmpty;
+  public ItemSO Item => item;
+  public int StackSize => stackSize;
 
   private void Start()
   {
@@ -33,6 +36,7 @@ public class Slot : MonoBehaviour
     {
       isEmpty = false;
       icon.gameObject.SetActive(true);
+      stackText.gameObject.SetActive(true);
       icon.sprite = item.Icon;
     }
   }
@@ -41,11 +45,7 @@ public class Slot : MonoBehaviour
   {
     item = data_;
     stackSize = stackSize_;
-
-    if (item.IsStackable && stackSize < item.MaxStack)
-    {
-      stackSize++;
-      stackText.text = stackSize.ToString();
-    }
+    stackText.text = $"{stackSize}";
+    UpdateSlot();
   }
 }

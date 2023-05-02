@@ -34,6 +34,7 @@ public class InventoryManager : MonoBehaviour
     {
       Slot slot = Instantiate(slotTemplate.gameObject, slotContainer).GetComponent<Slot>();
       inventorySlotList.Add(slot);
+      slot.UpdateSlot();
       slotList.Add(slot);
     }
 
@@ -43,6 +44,19 @@ public class InventoryManager : MonoBehaviour
 
   public void AddItem(Interactable item)
   {
-    Debug.Log("adding item");
+    for (int i = 0; i < inventorySlots.Length; i++)
+    {
+      if (inventorySlots[i].IsEmpty)
+      {
+        inventorySlots[i].AddItemToSlot(item.Item, 1);
+        return;
+      }
+      else if (inventorySlots[i].Item == item.Item && inventorySlots[i].StackSize < item.Item.MaxStack)
+      {
+        inventorySlots[i].AddItemToSlot(item.Item, inventorySlots[i].StackSize);
+        return;
+      }
+    }
+
   }
 }
