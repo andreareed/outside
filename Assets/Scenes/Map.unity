@@ -391,6 +391,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 232440838}
   m_CullTransparentMesh: 1
+--- !u!1001 &258909648
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 95345690253096084, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
+      propertyPath: m_Name
+      value: Drop Bag (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 727732433743916590, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 727732433743916590, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 727732433743916590, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 727732433743916590, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.384
+      objectReference: {fileID: 0}
+    - target: {fileID: 727732433743916590, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: 727732433743916590, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 727732433743916590, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727732433743916590, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727732433743916590, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727732433743916590, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 727732433743916590, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
 --- !u!1 &280487690
 GameObject:
   m_ObjectHideFlags: 0
@@ -1387,6 +1444,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004351163}
   m_CullTransparentMesh: 1
+--- !u!1 &1073297310 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 95345690253096084, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
+  m_PrefabInstance: {fileID: 258909648}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1073297311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073297310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4781866e0b9044628243b3ac86eaa69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: da54aa446df784c238429d6fceed3ac2, type: 2}
+  stackSize: 1
 --- !u!1 &1095098556
 GameObject:
   m_ObjectHideFlags: 0
@@ -1604,7 +1680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: da54aa446df784c238429d6fceed3ac2, type: 2}
-  stackSize: 1
+  stackSize: 3
 --- !u!1 &1475258173
 GameObject:
   m_ObjectHideFlags: 0
@@ -2588,6 +2664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventorySize: 56
+  slotCap: 100
   slotTemplate: {fileID: 8121039507339432672, guid: 7d81300f909924dc2b1e3aa447a661c7, type: 3}
   slotContainer: {fileID: 691840521}
   allSlots: []

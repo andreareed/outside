@@ -6,6 +6,7 @@ public class InventoryManager : MonoBehaviour
 {
   [Header("Settings")]
   [SerializeField] int inventorySize = 56;
+  [SerializeField] int slotCap = 100;
 
   [Header("Required References")]
   [SerializeField] GameObject slotTemplate;
@@ -34,8 +35,8 @@ public class InventoryManager : MonoBehaviour
     {
       Slot slot = Instantiate(slotTemplate.gameObject, slotContainer).GetComponent<Slot>();
       inventorySlotList.Add(slot);
-      slot.UpdateSlot();
       slotList.Add(slot);
+      slot.UpdateSlot();
     }
 
     inventorySlots = inventorySlotList.ToArray();
@@ -44,19 +45,86 @@ public class InventoryManager : MonoBehaviour
 
   public void AddItem(Interactable item)
   {
+    int quantityRemaining = item.StackSize;
+    for (int i = 0; i < inventorySlots.Length; i++)
+    {
+      if (
+        !inventorySlots[i].IsEmpty &&
+        inventorySlots[i].Item.ItemName == item.Item.ItemName &&
+        inventorySlots[i].StackSize < item.Item.MaxStack
+        )
+      {
+        int amountToAdd = Mathf.Min(item.Item.MaxStack - inventorySlots[i].StackSize, quantityRemaining);
+
+        inventorySlots[i].AddItemToSlot(item.Item, amountToAdd + inventorySlots[i].StackSize);
+        quantityRemaining -= amountToAdd;
+
+        if (quantityRemaining == 0)
+        {
+
+
+          return;
+        }
+      }
+    }
+
+    if (quantityRemaining > 0)
+    {
+
+
+      AddToEmptySlot(item, quantityRemaining);
+    }
+
+  }
+
+  private void AddToEmptySlot(Interactable item, int quantity)
+  {
+
+    Slot emptySlot = null;
     for (int i = 0; i < inventorySlots.Length; i++)
     {
       if (inventorySlots[i].IsEmpty)
       {
-        inventorySlots[i].AddItemToSlot(item.Item, 1);
-        return;
-      }
-      else if (inventorySlots[i].Item == item.Item && inventorySlots[i].StackSize < item.Item.MaxStack)
-      {
-        inventorySlots[i].AddItemToSlot(item.Item, inventorySlots[i].StackSize);
-        return;
+
+
+        emptySlot = inventorySlots[i];
+        break;
       }
     }
 
+    if (emptySlot != null)
+    {
+      int amountToAdd = Mathf.Min(item.Item.MaxStack - emptySlot.StackSize, quantity);
+
+
+      emptySlot.AddItemToSlot(item.Item, amountToAdd);
+
+      if (amountToAdd == quantity)
+      {
+        return;
+      }
+      else
+      {
+
+
+        AddToEmptySlot(item, quantity - amountToAdd);
+      }
+    }
+    else if (inventorySlots.Length < slotCap)
+    {
+
+
+      AddItemToNewSlot(item);
+    }
+  }
+
+  private void AddItemToNewSlot(Interactable item)
+  {
+    Slot slot = Instantiate(slotTemplate.gameObject, slotContainer).GetComponent<Slot>();
+    slot.AddItemToSlot(item.Item, 1);
+    inventorySlots = new Slot[inventorySlots.Length + 1];
+    inventorySlots[inventorySlots.Length - 1] = slot;
+    allSlots = new Slot[allSlots.Length + 1];
+    allSlots[allSlots.Length - 1] = slot;
   }
 }
