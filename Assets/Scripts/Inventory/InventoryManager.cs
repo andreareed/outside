@@ -52,18 +52,20 @@ public class InventoryManager : MonoBehaviour
       if (
         !inventorySlots[i].IsEmpty &&
         inventorySlots[i].Item.ItemName == item.Item.ItemName &&
+        inventorySlots[i].Item.IsStackable &&
         inventorySlots[i].StackSize < item.Item.MaxStack
         )
       {
-        int amountToAdd = Mathf.Min(item.Item.MaxStack - inventorySlots[i].StackSize, quantityRemaining);
+        int amountToAdd = Mathf.Min(
+          item.Item.MaxStack - inventorySlots[i].StackSize,
+          item.Item.IsStackable ? quantityRemaining : 1
+        );
 
         inventorySlots[i].AddItemToSlot(item.Item, amountToAdd + inventorySlots[i].StackSize);
         quantityRemaining -= amountToAdd;
 
         if (quantityRemaining == 0)
         {
-
-
           return;
         }
       }
@@ -71,8 +73,6 @@ public class InventoryManager : MonoBehaviour
 
     if (quantityRemaining > 0)
     {
-
-
       AddToEmptySlot(item, quantityRemaining);
     }
 
@@ -80,14 +80,11 @@ public class InventoryManager : MonoBehaviour
 
   private void AddToEmptySlot(Interactable item, int quantity)
   {
-
     Slot emptySlot = null;
     for (int i = 0; i < inventorySlots.Length; i++)
     {
       if (inventorySlots[i].IsEmpty)
       {
-
-
         emptySlot = inventorySlots[i];
         break;
       }
@@ -95,8 +92,12 @@ public class InventoryManager : MonoBehaviour
 
     if (emptySlot != null)
     {
-      int amountToAdd = Mathf.Min(item.Item.MaxStack - emptySlot.StackSize, quantity);
+      // int amountToAdd = Mathf.Min(item.Item.MaxStack - emptySlot.StackSize, quantity);
 
+      int amountToAdd = Mathf.Min(
+          item.Item.MaxStack - emptySlot.StackSize,
+          item.Item.IsStackable ? quantity : 1
+        );
 
       emptySlot.AddItemToSlot(item.Item, amountToAdd);
 
@@ -106,15 +107,11 @@ public class InventoryManager : MonoBehaviour
       }
       else
       {
-
-
         AddToEmptySlot(item, quantity - amountToAdd);
       }
     }
     else if (inventorySlots.Length < slotCap)
     {
-
-
       AddItemToNewSlot(item);
     }
   }

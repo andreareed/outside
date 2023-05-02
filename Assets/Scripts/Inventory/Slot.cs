@@ -86,8 +86,11 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
       }
       else if (dragDropHandler.SlotDraggedTo != null)
       {
-        // Combining stacks
-        if (dragDropHandler.SlotDraggedTo.Item = dragDropHandler.SlotDraggedFrom.Item)
+        bool isStackable = dragDropHandler.SlotDraggedTo.Item == dragDropHandler.SlotDraggedFrom.Item
+          && dragDropHandler.SlotDraggedTo.Item.IsStackable;
+
+        // Combine stacks
+        if (isStackable)
         {
           int amountToAdd = Mathf.Min(
             dragDropHandler.SlotDraggedTo.Item.MaxStack - dragDropHandler.SlotDraggedTo.StackSize,
@@ -113,9 +116,8 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
         }
         else
         {
-          // Swapping items
+          // Swap items
           inventoryManager.SwapSlots(dragDropHandler.SlotDraggedFrom, dragDropHandler.SlotDraggedTo);
-
         }
         dragDropHandler.IsDragging = false;
 

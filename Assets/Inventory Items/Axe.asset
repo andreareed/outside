@@ -18,3 +18,11 @@ MonoBehaviour:
   description: A modern metal axe, good for choppin'
   isStackable: 0
   maxStack: 1
+  healthAmount: 10
+  foodAmount: 10
+  waterAmount: 10
+  damage: 10
+  range: 10
+  fireRate: 1
+  reloadTime: 1
+  maxAmmo: 10
