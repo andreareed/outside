@@ -12,7 +12,6 @@ public class InventoryManager : MonoBehaviour
   [SerializeField] GameObject slotTemplate;
   [SerializeField] Transform slotContainer;
   [SerializeField] GameObject dropModel;
-  [SerializeField] Transform dropPosition;
 
   private Slot[] inventorySlots;
   [SerializeField] Slot[] allSlots;
@@ -137,8 +136,11 @@ public class InventoryManager : MonoBehaviour
       return;
     }
 
-    Interactable droppedItem = Instantiate(dropModel, dropPosition).AddComponent<Interactable>();
-    droppedItem.transform.position = dropPosition.position;
+    Vector3 mousePosition = Input.mousePosition;
+    mousePosition.z = 2.0f; // 2m away from the camera position
+    Vector3 dropPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+
+    Interactable droppedItem = Instantiate(dropModel, dropPosition, Quaternion.Normalize(dropModel.transform.rotation)).AddComponent<Interactable>();
     droppedItem.transform.SetParent(null);
 
     droppedItem.Item = slot.Item;

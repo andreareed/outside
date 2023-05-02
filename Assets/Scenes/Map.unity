@@ -123,37 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &92205487
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 92205488}
-  m_Layer: 0
-  m_Name: DropPosition
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &92205488
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 92205487}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.14}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2084542769}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &140790720
 GameObject:
   m_ObjectHideFlags: 0
@@ -2699,7 +2668,6 @@ Transform:
   m_Children:
   - {fileID: 963194228}
   - {fileID: 1776335357}
-  - {fileID: 92205488}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2778,7 +2746,6 @@ MonoBehaviour:
   slotTemplate: {fileID: 8121039507339432672, guid: 7d81300f909924dc2b1e3aa447a661c7, type: 3}
   slotContainer: {fileID: 691840521}
   dropModel: {fileID: 95345690253096084, guid: e297c855e5f994956a0f99d28e76135d, type: 3}
-  dropPosition: {fileID: 92205488}
   allSlots: []
 --- !u!114 &2084542774
 MonoBehaviour:
