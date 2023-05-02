@@ -7,7 +7,7 @@ public class Interactable : MonoBehaviour
   [SerializeField] ItemSO item;
   [SerializeField] int stackSize;
 
-  // Public getters
-  public ItemSO Item => item;
-  public int StackSize => stackSize;
+  // Public setters & getters
+  public ItemSO Item { get => item; set => item = value; }
+  public int StackSize { get => stackSize; set => stackSize = value; }
 }

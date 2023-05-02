@@ -11,6 +11,8 @@ public class InventoryManager : MonoBehaviour
   [Header("Required References")]
   [SerializeField] GameObject slotTemplate;
   [SerializeField] Transform slotContainer;
+  [SerializeField] GameObject dropModel;
+  [SerializeField] Transform dropPosition;
 
   private Slot[] inventorySlots;
   [SerializeField] Slot[] allSlots;
@@ -126,5 +128,34 @@ public class InventoryManager : MonoBehaviour
     inventorySlots[inventorySlots.Length - 1] = slot;
     allSlots = new Slot[allSlots.Length + 1];
     allSlots[allSlots.Length - 1] = slot;
+  }
+
+  public void DropItem(Slot slot)
+  {
+    if (slot.IsEmpty)
+    {
+      return;
+    }
+
+    Interactable droppedItem = Instantiate(dropModel, dropPosition).AddComponent<Interactable>();
+    droppedItem.transform.position = dropPosition.position;
+    droppedItem.transform.SetParent(null);
+
+    droppedItem.Item = slot.Item;
+    droppedItem.StackSize = slot.StackSize;
+
+    slot.ClearSlot();
+  }
+
+  public void SwapSlots(Slot slotFrom, Slot slotTo)
+  {
+    if (slotFrom.Item != slotTo.Item)
+    {
+      ItemSO item = slotTo.Item;
+      int stackSize = slotTo.StackSize;
+
+      slotTo.AddItemToSlot(slotFrom.Item, slotFrom.StackSize);
+      slotFrom.AddItemToSlot(item, stackSize);
+    }
   }
 }
