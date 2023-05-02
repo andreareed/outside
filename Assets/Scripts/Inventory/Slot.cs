@@ -86,7 +86,37 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
       }
       else if (dragDropHandler.SlotDraggedTo != null)
       {
-        inventoryManager.SwapSlots(dragDropHandler.SlotDraggedFrom, dragDropHandler.SlotDraggedTo);
+        // Combining stacks
+        if (dragDropHandler.SlotDraggedTo.Item = dragDropHandler.SlotDraggedFrom.Item)
+        {
+          int amountToAdd = Mathf.Min(
+            dragDropHandler.SlotDraggedTo.Item.MaxStack - dragDropHandler.SlotDraggedTo.StackSize,
+            dragDropHandler.SlotDraggedFrom.StackSize
+          );
+
+          dragDropHandler.SlotDraggedTo.AddItemToSlot(
+            dragDropHandler.SlotDraggedTo.Item,
+            amountToAdd + dragDropHandler.SlotDraggedTo.StackSize
+          );
+
+          if (amountToAdd == dragDropHandler.SlotDraggedFrom.StackSize)
+          {
+            dragDropHandler.SlotDraggedFrom.ClearSlot();
+          }
+          else
+          {
+            dragDropHandler.SlotDraggedFrom.AddItemToSlot(
+              dragDropHandler.SlotDraggedFrom.Item,
+              dragDropHandler.SlotDraggedFrom.StackSize - amountToAdd
+            );
+          }
+        }
+        else
+        {
+          // Swapping items
+          inventoryManager.SwapSlots(dragDropHandler.SlotDraggedFrom, dragDropHandler.SlotDraggedTo);
+
+        }
         dragDropHandler.IsDragging = false;
 
       }

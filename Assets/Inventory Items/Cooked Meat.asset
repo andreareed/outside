@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: Cooked Meat
   description: Delicious cooked meat.  Restores hunger and health.
   isStackable: 1
-  maxStack: 50
+  maxStack: 4
   healthAmount: 10
   foodAmount: 10
   waterAmount: 0
