@@ -14,7 +14,6 @@ public class InventoryManager : MonoBehaviour
   [SerializeField] GameObject dropModel;
 
   private Slot[] inventorySlots;
-  [SerializeField] Slot[] allSlots;
 
 
   private void Start()
@@ -24,24 +23,16 @@ public class InventoryManager : MonoBehaviour
 
   private void GenerateSlots()
   {
-    List<Slot> slotList = new List<Slot>();
     List<Slot> inventorySlotList = new List<Slot>();
-
-    for (int i = 0; i < allSlots.Length; i++)
-    {
-      slotList.Add(allSlots[i]);
-    }
 
     for (int i = 0; i < inventorySize; i++)
     {
       Slot slot = Instantiate(slotTemplate.gameObject, slotContainer).GetComponent<Slot>();
-      inventorySlotList.Add(slot);
-      slotList.Add(slot);
       slot.UpdateSlot();
+      inventorySlotList.Add(slot);
     }
 
     inventorySlots = inventorySlotList.ToArray();
-    allSlots = slotList.ToArray();
   }
 
   public void AddItem(Interactable item)
@@ -122,8 +113,6 @@ public class InventoryManager : MonoBehaviour
     slot.AddItemToSlot(item.Item, 1);
     inventorySlots = new Slot[inventorySlots.Length + 1];
     inventorySlots[inventorySlots.Length - 1] = slot;
-    allSlots = new Slot[allSlots.Length + 1];
-    allSlots[allSlots.Length - 1] = slot;
   }
 
   public void DropItem(Slot slot)
