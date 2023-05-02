@@ -18,6 +18,22 @@ public class ItemSO : ScriptableObject
   [SerializeField] bool isStackable = false;
   [SerializeField] int maxStack = 1;
 
+  [Header("Consumable")]
+  [SerializeField] float healthAmount = 10f;
+  [SerializeField] float foodAmount = 10f;
+  [SerializeField] float waterAmount = 10f;
+
+  [Header("Weapon")]
+  [SerializeField] float damage = 10f;
+  [SerializeField] float range = 10f;
+  [SerializeField] float fireRate = 1f;
+  [SerializeField] float reloadTime = 1f;
+  [SerializeField] int maxAmmo = 10;
+
+
+
+
+
 
   // Public getters
   public ItemType Type => itemType;
