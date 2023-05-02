@@ -13,6 +13,8 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
   [Header("Required References")]
   [SerializeField] Image icon;
   [SerializeField] Text stackText;
+  [SerializeField] Text hotbarNumberText;
+  private int hotbarNumber = -1;
   private bool isEmpty;
   private DragDropHandler dragDropHandler;
   private InventoryManager inventoryManager;
@@ -22,6 +24,7 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
   public Image Icon => icon;
   public ItemSO Item { get => item; set => item = value; }
   public int StackSize { get => stackSize; set => stackSize = value; }
+  public int HotbarNumber { set => hotbarNumber = value; }
 
   private void Start()
   {
@@ -32,11 +35,16 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
 
   public void UpdateSlot()
   {
+    Image slotBackground = GetComponent<Image>();
+    Color color = new Color(slotBackground.color.r, slotBackground.color.g, slotBackground.color.b, 1);
+
     if (item == null)
     {
       isEmpty = true;
       icon.gameObject.SetActive(false);
       stackText.gameObject.SetActive(false);
+      color.a = .4f;
+      slotBackground.color = color;
     }
     else
     {
@@ -45,6 +53,13 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
       stackText.gameObject.SetActive(true);
       icon.sprite = item.Icon;
       stackText.text = $"{stackSize}";
+      color.a = .8f;
+      slotBackground.color = color;
+    }
+
+    if (hotbarNumber >= 0)
+    {
+      hotbarNumberText.text = $"{hotbarNumber}";
     }
   }
 

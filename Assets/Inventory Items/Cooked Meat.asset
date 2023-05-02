@@ -18,9 +18,9 @@ MonoBehaviour:
   description: Delicious cooked meat.  Restores hunger and health.
   isStackable: 1
   maxStack: 4
-  healthAmount: 10
-  foodAmount: 10
-  waterAmount: 0
+  health: 5
+  food: 10
+  water: 10
   damage: 10
   range: 10
   fireRate: 1

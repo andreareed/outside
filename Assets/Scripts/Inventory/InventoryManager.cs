@@ -52,6 +52,7 @@ public class InventoryManager : MonoBehaviour
     {
       Slot slot = Instantiate(slotTemplate.gameObject, hotbarContainer).GetComponent<Slot>();
       slot.UpdateSlot();
+      slot.HotbarNumber = i + 1;
       hotbarSlotsList.Add(slot);
     }
 
