@@ -44,6 +44,7 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
       icon.gameObject.SetActive(true);
       stackText.gameObject.SetActive(true);
       icon.sprite = item.Icon;
+      stackText.text = $"{stackSize}";
     }
   }
 
@@ -51,8 +52,36 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
   {
     item = data_;
     stackSize = stackSize_;
-    stackText.text = $"{stackSize}";
     UpdateSlot();
+  }
+
+  public void UseItem()
+  {
+    if (item != null)
+    {
+      if (item.ItemType == ItemSO._ItemType.Consumable)
+      {
+        Consume();
+      }
+    }
+  }
+
+  private void Consume()
+  {
+    PlayerStats stats = GetComponentInParent<PlayerStats>();
+    stats.UpdateHealth(item.Health);
+    stats.UpdateFood(item.Food);
+    stats.UpdateWater(item.Water);
+
+    stackSize--;
+    if (stackSize <= 0)
+    {
+      ClearSlot();
+    }
+    else
+    {
+      UpdateSlot();
+    }
   }
 
   public void OnPointerEnter(PointerEventData eventData)

@@ -25,6 +25,11 @@ public class InventoryManager : MonoBehaviour
     GenerateInventorySlots();
   }
 
+  private void Update()
+  {
+    HotbarListener();
+  }
+
   private void GenerateInventorySlots()
   {
     List<Slot> inventorySlotList = new List<Slot>();
@@ -51,6 +56,42 @@ public class InventoryManager : MonoBehaviour
     }
 
     hotbarSlots = hotbarSlotsList.ToArray();
+  }
+
+  private void HotbarListener()
+  {
+    if (Input.GetKeyDown(KeyCode.Alpha1))
+    {
+      hotbarSlots[0].UseItem();
+    }
+    if (Input.GetKeyDown(KeyCode.Alpha2))
+    {
+      hotbarSlots[1].UseItem();
+    }
+    if (Input.GetKeyDown(KeyCode.Alpha3))
+    {
+      hotbarSlots[2].UseItem();
+    }
+    if (Input.GetKeyDown(KeyCode.Alpha4))
+    {
+      hotbarSlots[3].UseItem();
+    }
+    if (Input.GetKeyDown(KeyCode.Alpha5))
+    {
+      hotbarSlots[4].UseItem();
+    }
+    if (Input.GetKeyDown(KeyCode.Alpha6))
+    {
+      hotbarSlots[5].UseItem();
+    }
+    if (Input.GetKeyDown(KeyCode.Alpha7))
+    {
+      hotbarSlots[6].UseItem();
+    }
+    if (Input.GetKeyDown(KeyCode.Alpha8))
+    {
+      hotbarSlots[7].UseItem();
+    }
   }
 
   public void AddItem(Interactable item)

@@ -6,10 +6,10 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "New Item", menuName = "Game/Inventory/New Item")]
 public class ItemSO : ScriptableObject
 {
-  public enum ItemType { Generic, Consumable, Weapon }
+  public enum _ItemType { Generic, Consumable, Weapon }
 
   [Header("General")]
-  [SerializeField] ItemType itemType;
+  [SerializeField] _ItemType itemType;
   [SerializeField] Sprite icon;
   [SerializeField] string itemName;
   [SerializeField] string description;
@@ -19,9 +19,9 @@ public class ItemSO : ScriptableObject
   [SerializeField] int maxStack = 1;
 
   [Header("Consumable")]
-  [SerializeField] float healthAmount = 10f;
-  [SerializeField] float foodAmount = 10f;
-  [SerializeField] float waterAmount = 10f;
+  [SerializeField] float health = 10f;
+  [SerializeField] float food = 10f;
+  [SerializeField] float water = 10f;
 
   [Header("Weapon")]
   [SerializeField] float damage = 10f;
@@ -30,16 +30,21 @@ public class ItemSO : ScriptableObject
   [SerializeField] float reloadTime = 1f;
   [SerializeField] int maxAmmo = 10;
 
-
-
-
-
-
   // Public getters
-  public ItemType Type => itemType;
+  public _ItemType ItemType => itemType;
   public Sprite Icon => icon;
   public string ItemName => itemName;
   public string Description => description;
   public bool IsStackable => isStackable;
   public int MaxStack => maxStack;
+
+  public float Health => health;
+  public float Food => food;
+  public float Water => water;
+
+  public float Damage => damage;
+  public float Range => range;
+  public float FireRate => fireRate;
+  public float ReloadTime => reloadTime;
+  public int MaxAmmo => maxAmmo;
 }
