@@ -141,7 +141,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     Vector3 mousePosition = Input.mousePosition;
-    mousePosition.z = 2.0f; // 2m away from the camera position
+    mousePosition.z += 1.0f; // 1m away from the camera position
     Vector3 dropPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
     Interactable droppedItem = Instantiate(dropModel, dropPosition, Quaternion.Normalize(dropModel.transform.rotation)).AddComponent<Interactable>();

@@ -1946,7 +1946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: da54aa446df784c238429d6fceed3ac2, type: 2}
-  stackSize: 1
+  stackSize: 12
 --- !u!1 &1475258173
 GameObject:
   m_ObjectHideFlags: 0
