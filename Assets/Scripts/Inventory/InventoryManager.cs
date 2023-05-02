@@ -5,23 +5,27 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
   [Header("Settings")]
-  [SerializeField] int inventorySize = 56;
+  [SerializeField] int inventorySize = 42;
   [SerializeField] int slotCap = 100;
+  [SerializeField] int hotbarSize = 8;
 
   [Header("Required References")]
   [SerializeField] GameObject slotTemplate;
   [SerializeField] Transform slotContainer;
+  [SerializeField] Transform hotbarContainer;
   [SerializeField] GameObject dropModel;
 
   private Slot[] inventorySlots;
+  private Slot[] hotbarSlots;
 
 
   private void Start()
   {
-    GenerateSlots();
+    GenerateHotBarSlots();
+    GenerateInventorySlots();
   }
 
-  private void GenerateSlots()
+  private void GenerateInventorySlots()
   {
     List<Slot> inventorySlotList = new List<Slot>();
 
@@ -33,6 +37,20 @@ public class InventoryManager : MonoBehaviour
     }
 
     inventorySlots = inventorySlotList.ToArray();
+  }
+
+  private void GenerateHotBarSlots()
+  {
+    List<Slot> hotbarSlotsList = new List<Slot>();
+
+    for (int i = 0; i < hotbarSize; i++)
+    {
+      Slot slot = Instantiate(slotTemplate.gameObject, hotbarContainer).GetComponent<Slot>();
+      slot.UpdateSlot();
+      hotbarSlotsList.Add(slot);
+    }
+
+    hotbarSlots = hotbarSlotsList.ToArray();
   }
 
   public void AddItem(Interactable item)
