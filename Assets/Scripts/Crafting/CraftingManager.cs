@@ -4,24 +4,34 @@ using UnityEngine;
 
 public class CraftingManager : MonoBehaviour
 {
-  public BlueprintTemplate blueprints;
-  public CraftingBlueprintSO[] craftingBlueprints;
-  public Transform craftingContainer;
+  [SerializeField] GameObject blueprintTemplate;
+  [SerializeField] Transform craftingContainer;
+  [SerializeField] CraftingBlueprintSO[] craftingBlueprints;
 
-  public void GenerateRecipes()
+  public void GenerateBlueprints()
   {
+    List<Blueprint> blueprintList = new List<Blueprint>();
     for (int i = 0; i < craftingBlueprints.Length; i++)
     {
-      CraftingBlueprintSO blueprint = craftingBlueprints[i];
-      BlueprintTemplate recipeTemplate = Instantiate(blueprints, craftingContainer);
-      recipeTemplate.icon.sprite = blueprint.result.Icon;
-      recipeTemplate.nameText.text = blueprint.blueprintName;
-      recipeTemplate.requirementsText.text = "";
-      for (int j = 0; j < blueprint.requirements.Length; j++)
-      {
-        CraftingRequirement requirement = blueprint.requirements[j];
-        recipeTemplate.requirementsText.text += requirement.item.ItemName + " x" + requirement.amountNeeded + "\n";
-      }
+      Blueprint bp = Instantiate(blueprintTemplate.gameObject, craftingContainer).GetComponent<Blueprint>();
+      // blueprintTemplate.icon.sprite = blueprint.result.Icon;
+      // blueprintTemplate.nameText.text = blueprint.blueprintName;
+      // for (int j = 0; j < blueprint.requirements.Length; j++)
+      // {
+      //   CraftingRequirement requirement = blueprint.requirements[j];
+      //   blueprintTemplate.requirementsText.text += requirement.item.ItemName + " x" + requirement.amountNeeded + "\n";
+      // }
     }
   }
+
+  //  List<Slot> inventorySlotList = new List<Slot>();
+
+  // for (int i = 0; i < inventorySize; i++)
+  // {
+  //   Slot slot = Instantiate(slotTemplate.gameObject, slotContainer).GetComponent<Slot>();
+  //   slot.UpdateSlot();
+  //   inventorySlotList.Add(slot);
+  // }
+
+  // inventorySlots = inventorySlotList.ToArray();
 }
