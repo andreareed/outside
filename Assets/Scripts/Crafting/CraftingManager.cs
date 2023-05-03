@@ -1,12 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CraftingManager : MonoBehaviour
 {
   [SerializeField] GameObject blueprintTemplate;
   [SerializeField] Transform craftingContainer;
+  [SerializeField] Transform detailsContainer;
   [SerializeField] CraftingBlueprintSO[] craftingBlueprints;
+
+  private Blueprint[] blueprints;
+
+  private void Start()
+  {
+    GenerateBlueprints();
+  }
 
   public void GenerateBlueprints()
   {
@@ -14,24 +23,32 @@ public class CraftingManager : MonoBehaviour
     for (int i = 0; i < craftingBlueprints.Length; i++)
     {
       Blueprint bp = Instantiate(blueprintTemplate.gameObject, craftingContainer).GetComponent<Blueprint>();
-      // blueprintTemplate.icon.sprite = blueprint.result.Icon;
-      // blueprintTemplate.nameText.text = blueprint.blueprintName;
-      // for (int j = 0; j < blueprint.requirements.Length; j++)
-      // {
-      //   CraftingRequirement requirement = blueprint.requirements[j];
-      //   blueprintTemplate.requirementsText.text += requirement.item.ItemName + " x" + requirement.amountNeeded + "\n";
-      // }
+      bp.icon.sprite = craftingBlueprints[i].result.Icon;
+      bp.result = craftingBlueprints[i].result;
+      bp.requirements = craftingBlueprints[i].requirements;
+      Button button = bp.GetComponent<Button>();
+      button.onClick.AddListener(delegate { ShowCraftingInstructionsForItem(bp); });
+
+      blueprintList.Add(bp);
     }
+    blueprints = blueprintList.ToArray();
+
   }
 
-  //  List<Slot> inventorySlotList = new List<Slot>();
+  private void ShowCraftingInstructionsForItem(Blueprint blueprint)
+  {
+    detailsContainer.Find("ItemName").GetComponent<Text>().text = blueprint.result.ItemName;
+    detailsContainer.Find("Image").GetComponent<Image>().sprite = blueprint.result.Icon;
+    detailsContainer.Find("Description").GetComponent<Text>().text = blueprint.result.Description;
+    Text requirementsText = detailsContainer.Find("Requirements").GetComponent<Text>();
+    requirementsText.text = "";
 
-  // for (int i = 0; i < inventorySize; i++)
-  // {
-  //   Slot slot = Instantiate(slotTemplate.gameObject, slotContainer).GetComponent<Slot>();
-  //   slot.UpdateSlot();
-  //   inventorySlotList.Add(slot);
-  // }
+    for (int i = 0; i < blueprint.requirements.Length; i++)
+    {
+      CraftingResource resource = blueprint.requirements[i];
+      requirementsText.text += resource.unit + " x" + resource.amount + "\n";
+    }
 
-  // inventorySlots = inventorySlotList.ToArray();
+    detailsContainer.gameObject.SetActive(true);
+  }
 }
