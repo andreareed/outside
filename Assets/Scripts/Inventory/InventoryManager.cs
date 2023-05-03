@@ -17,12 +17,17 @@ public class InventoryManager : MonoBehaviour
 
   private Slot[] inventorySlots;
   private Slot[] hotbarSlots;
+  private Dictionary<string, int> allInventoryItems;
+
+  // Public getters
+  public Dictionary<string, int> AllInventoryItems => allInventoryItems;
 
 
   private void Start()
   {
     GenerateHotBarSlots();
     GenerateInventorySlots();
+    allInventoryItems = new Dictionary<string, int>();
   }
 
   private void Update()
@@ -114,6 +119,7 @@ public class InventoryManager : MonoBehaviour
 
         inventorySlots[i].AddItemToSlot(item.Item, amountToAdd + inventorySlots[i].StackSize);
         quantityRemaining -= amountToAdd;
+        UpdateInventoryList(item.Item.ItemName, amountToAdd);
 
         if (quantityRemaining == 0)
         {
@@ -151,6 +157,7 @@ public class InventoryManager : MonoBehaviour
         );
 
       emptySlot.AddItemToSlot(item.Item, amountToAdd);
+      UpdateInventoryList(item.Item.ItemName, amountToAdd);
 
       if (amountToAdd == quantity)
       {
@@ -163,16 +170,16 @@ public class InventoryManager : MonoBehaviour
     }
     else if (inventorySlots.Length < slotCap)
     {
-      AddItemToNewSlot(item);
+      AddItemToNewSlot(item, quantity);
     }
   }
 
-  private void AddItemToNewSlot(Interactable item)
+  private void AddItemToNewSlot(Interactable item, int quantity)
   {
     Slot slot = Instantiate(slotTemplate.gameObject, slotContainer).GetComponent<Slot>();
-    slot.AddItemToSlot(item.Item, 1);
     inventorySlots = new Slot[inventorySlots.Length + 1];
     inventorySlots[inventorySlots.Length - 1] = slot;
+    AddToEmptySlot(item, quantity);
   }
 
   public void DropItem(Slot slot)
@@ -192,6 +199,7 @@ public class InventoryManager : MonoBehaviour
     droppedItem.Item = slot.Item;
     droppedItem.StackSize = slot.StackSize;
 
+    UpdateInventoryList(slot.Item.ItemName, -slot.StackSize);
     slot.ClearSlot();
   }
 
@@ -205,5 +213,42 @@ public class InventoryManager : MonoBehaviour
       slotTo.AddItemToSlot(slotFrom.Item, slotFrom.StackSize);
       slotFrom.AddItemToSlot(item, stackSize);
     }
+  }
+
+  public void UpdateInventoryList(string itemName, int amount)
+  {
+    if (allInventoryItems.ContainsKey(itemName))
+    {
+      allInventoryItems[itemName] += amount;
+    }
+    else
+    {
+      allInventoryItems.Add(itemName, amount);
+    }
+  }
+
+  public void RemoveItem(ItemSO item, int amount)
+  {
+    for (int i = inventorySlots.Length - 1; i >= 0 && amount > 0; i--)
+    {
+      Slot slot = inventorySlots[i];
+      if (!slot.IsEmpty && slot.Item == item)
+      {
+        if (slot.StackSize > amount)
+        {
+          slot.StackSize -= amount;
+          UpdateInventoryList(item.ItemName, -amount);
+          slot.UpdateSlot();
+          break;
+        }
+        else
+        {
+          amount -= slot.StackSize;
+          slot.ClearSlot();
+          UpdateInventoryList(item.ItemName, -slot.StackSize);
+        }
+      }
+    }
+
   }
 }

@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ResourceUnit { Fiber, Hide, Metal, Stone, Thatch, Wood }
-
 // Custom serializable class
 [System.Serializable]
 public class CraftingResource
 {
-  public ResourceUnit unit;
+  public ItemSO resource;
   public int amount = 1;
 }
 
