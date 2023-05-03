@@ -44,6 +44,11 @@ public class WindowHandler : MonoBehaviour
         inventoryOpen = false;
         inventoryScreen.gameObject.SetActive(false);
       }
+
+      if (!craftingOpen)
+      {
+        craftingScreen.transform.Find("ItemDetails").gameObject.SetActive(false);
+      }
       craftingScreen.gameObject.SetActive(craftingOpen);
     }
 
