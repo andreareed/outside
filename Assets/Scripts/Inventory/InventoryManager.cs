@@ -27,7 +27,6 @@ public class InventoryManager : MonoBehaviour
   {
     GenerateHotBarSlots();
     GenerateInventorySlots();
-    allInventoryItems = new Dictionary<string, int>();
   }
 
   private void Update()
@@ -119,7 +118,6 @@ public class InventoryManager : MonoBehaviour
 
         inventorySlots[i].AddItemToSlot(item.Item, amountToAdd + inventorySlots[i].StackSize);
         quantityRemaining -= amountToAdd;
-        UpdateInventoryList(item.Item.ItemName, amountToAdd);
 
         if (quantityRemaining == 0)
         {
@@ -133,6 +131,7 @@ public class InventoryManager : MonoBehaviour
       AddToEmptySlot(item, quantityRemaining);
     }
 
+    UpdateInventoryList();
   }
 
   private void AddToEmptySlot(Interactable item, int quantity)
@@ -157,7 +156,6 @@ public class InventoryManager : MonoBehaviour
         );
 
       emptySlot.AddItemToSlot(item.Item, amountToAdd);
-      UpdateInventoryList(item.Item.ItemName, amountToAdd);
 
       if (amountToAdd == quantity)
       {
@@ -199,8 +197,8 @@ public class InventoryManager : MonoBehaviour
     droppedItem.Item = slot.Item;
     droppedItem.StackSize = slot.StackSize;
 
-    UpdateInventoryList(slot.Item.ItemName, -slot.StackSize);
     slot.ClearSlot();
+    UpdateInventoryList();
   }
 
   public void SwapSlots(Slot slotFrom, Slot slotTo)
@@ -215,15 +213,24 @@ public class InventoryManager : MonoBehaviour
     }
   }
 
-  public void UpdateInventoryList(string itemName, int amount)
+  public void UpdateInventoryList()
   {
-    if (allInventoryItems.ContainsKey(itemName))
+    allInventoryItems = new Dictionary<string, int>();
+    for (int i = 0; i < inventorySize; i++)
     {
-      allInventoryItems[itemName] += amount;
-    }
-    else
-    {
-      allInventoryItems.Add(itemName, amount);
+      Slot slot = inventorySlots[i];
+      if (!slot.IsEmpty)
+      {
+        string item = slot.Item.ItemName;
+        if (allInventoryItems.ContainsKey(item))
+        {
+          allInventoryItems[item] += slot.StackSize;
+        }
+        else
+        {
+          allInventoryItems.Add(item, slot.StackSize);
+        }
+      }
     }
   }
 
@@ -237,7 +244,6 @@ public class InventoryManager : MonoBehaviour
         if (slot.StackSize > amount)
         {
           slot.StackSize -= amount;
-          UpdateInventoryList(item.ItemName, -amount);
           slot.UpdateSlot();
           break;
         }
@@ -245,10 +251,9 @@ public class InventoryManager : MonoBehaviour
         {
           amount -= slot.StackSize;
           slot.ClearSlot();
-          UpdateInventoryList(item.ItemName, -slot.StackSize);
         }
       }
     }
-
+    UpdateInventoryList();
   }
 }
