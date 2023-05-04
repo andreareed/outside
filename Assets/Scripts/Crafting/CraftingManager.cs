@@ -25,16 +25,14 @@ public class CraftingManager : MonoBehaviour
     for (int i = 0; i < craftingBlueprints.Length; i++)
     {
       Blueprint bp = Instantiate(blueprintTemplate.gameObject, craftingContainer).GetComponent<Blueprint>();
-      bp.icon.sprite = craftingBlueprints[i].result.Icon;
-      bp.result = craftingBlueprints[i].result;
-      bp.requirements = craftingBlueprints[i].requirements;
+      bp.init(craftingBlueprints[i]);
+
       Button button = bp.GetComponent<Button>();
       button.onClick.AddListener(delegate { ShowCraftingInstructionsForItem(bp); });
 
       blueprintList.Add(bp);
     }
     blueprints = blueprintList.ToArray();
-
   }
 
   private void ShowCraftingInstructionsForItem(Blueprint blueprint)

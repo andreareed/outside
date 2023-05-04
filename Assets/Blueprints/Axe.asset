@@ -14,12 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blueprintName: Axe
   requirements:
-  - unit: 5
+  - resource: {fileID: 11400000, guid: 796cc24c205c94be9a5b4b3815cb48ab, type: 2}
     amount: 2
-  - unit: 1
+  - resource: {fileID: 11400000, guid: 09f74d988a2be4def9e9bd6ebd2d5f6e, type: 2}
     amount: 5
-  - unit: 2
-    amount: 3
   result: {fileID: 11400000, guid: da54aa446df784c238429d6fceed3ac2, type: 2}
   resultAmount: 1
   craftTime: 5
