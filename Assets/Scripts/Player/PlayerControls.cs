@@ -21,14 +21,14 @@ public class PlayerControls : MonoBehaviour
   [Space]
 
   [Header("Player Movement")]
-  [SerializeField] float walkSpeed = 5f;
+  [SerializeField] float walkSpeed = 10f;
   [SerializeField] float maxVelocityChange = 10f;
   [Space]
 
   [Header("Player Sprint")]
   [SerializeField] bool unlimitedSprint = false;
   [SerializeField] KeyCode sprintKey = KeyCode.LeftShift;
-  [SerializeField] float sprintSpeed = 7f;
+  [SerializeField] float sprintSpeed = 15f;
   [SerializeField] float sprintRegenDelay = 2f;
   [SerializeField] float sprintFOV = 80f;
   [SerializeField] float sprintFOVStepTime = 10f;
@@ -146,8 +146,6 @@ public class PlayerControls : MonoBehaviour
         regenDelay -= 1 * Time.deltaTime;
       }
     }
-
-
   }
 
   private void FixedUpdate()
@@ -203,11 +201,12 @@ public class PlayerControls : MonoBehaviour
   {
     Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f), transform.position.z);
     Vector3 direction = transform.TransformDirection(Vector3.down);
-    float distance = .75f;
+    CapsuleCollider collider = GetComponent<CapsuleCollider>();
+    // Distance from center of collider to ground + .1f
+    float distance = collider.height / 2 + .1f;
 
     if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
     {
-      Debug.DrawRay(origin, direction * distance, Color.red);
       isGrounded = true;
     }
     else
