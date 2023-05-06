@@ -217,6 +217,7 @@ public class PlayerControls : MonoBehaviour
 
   private void Jump()
   {
+    Debug.Log("isGrounded" + isGrounded);
     if (isGrounded)
     {
       rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
