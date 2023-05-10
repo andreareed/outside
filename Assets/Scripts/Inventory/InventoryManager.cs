@@ -46,6 +46,7 @@ public class InventoryManager : MonoBehaviour
     }
 
     inventorySlots = inventorySlotList.ToArray();
+    UpdateInventoryList();
   }
 
   private void GenerateHotBarSlots()
