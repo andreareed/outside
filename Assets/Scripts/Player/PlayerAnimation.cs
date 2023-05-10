@@ -13,6 +13,8 @@ public class PlayerAnimation : MonoBehaviour
   private int isJumpingHash;
   private int isFallingHash;
   private int isLandingHash;
+  private int isMovingBackwardsHash;
+  private bool isStrafing;
 
   void Start()
   {
@@ -22,12 +24,22 @@ public class PlayerAnimation : MonoBehaviour
     isJumpingHash = Animator.StringToHash("isJumping");
     isFallingHash = Animator.StringToHash("isFalling");
     isLandingHash = Animator.StringToHash("isLanding");
+    isMovingBackwardsHash = Animator.StringToHash("isMovingBackwards");
   }
 
   void Update()
   {
-    bool movementInput = Input.GetAxis("Vertical") != 0
-      || Input.GetAxis("Horizontal") != 0;
+
+    float horizontalInput = Input.GetAxis("Horizontal");
+    float verticalInput = Input.GetAxis("Vertical");
+
+    bool isStrafing = horizontalInput != 0;
+    bool movingBackwards = verticalInput < 0;
+
+    bool movementInput = horizontalInput != 0
+      || verticalInput != 0;
+    // bool isBackwards = verticalInput < 0
+    Debug.Log(horizontalInput + " " + verticalInput);
     bool isSprinting = playerControls.IsSprinting;
     float maxVelocity = isSprinting ? 1f : .2f;
 
@@ -67,6 +79,20 @@ public class PlayerAnimation : MonoBehaviour
     {
       velocity -= Time.deltaTime * decceleration;
     }
+
+    if (animator.GetFloat(velocityHash) != velocity)
+    {
+      animator.SetFloat(velocityHash, movingBackwards ? 0 : Mathf.Clamp(velocity, 0, 1));
+    }
+
+    if (animator.GetBool(isMovingBackwardsHash) != movingBackwards)
+    {
+      animator.SetBool(isMovingBackwardsHash, movingBackwards);
+    }
+
     animator.SetFloat(velocityHash, velocity);
   }
+
+
+
 }
