@@ -41,9 +41,11 @@ public class PlayerControls : MonoBehaviour
 
   [Header("Jumping")]
   [SerializeField] KeyCode jumpKey = KeyCode.Space;
-  [SerializeField] float jumpPower = 5f;
+  [SerializeField] float jumpPower = 10f;
   // Jump Internal variables
   private bool isGrounded = false;
+  private bool isJumping = false;
+  private bool isFalling = false;
   [Space]
 
   [Header("Crouching")]
@@ -60,6 +62,8 @@ public class PlayerControls : MonoBehaviour
   public bool IsSprinting => isSprinting;
   public bool IsCrouched => isCrouched;
   public bool IsGrounded => isGrounded;
+  public bool IsJumping => isJumping;
+  public bool IsFalling => isFalling;
 
   private void Start()
   {
@@ -207,17 +211,17 @@ public class PlayerControls : MonoBehaviour
   {
     Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f), transform.position.z);
     Vector3 direction = transform.TransformDirection(Vector3.down);
-    CapsuleCollider collider = GetComponent<CapsuleCollider>();
-    // Distance from center of collider to ground + .1f
-    float distance = collider.height / 2 + .1f;
+    float distance = 1f;
 
-    if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
+    if (Physics.Raycast(origin, direction, out RaycastHit hit))
     {
-      isGrounded = true;
+      isGrounded = hit.distance <= distance;
+      isFalling = hit.distance >= distance * 2 && rb.velocity.y < 0;
     }
-    else
+
+    if (isJumping && isFalling)
     {
-      isGrounded = false;
+      isJumping = false;
     }
   }
 
@@ -226,7 +230,7 @@ public class PlayerControls : MonoBehaviour
     if (isGrounded)
     {
       rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
-      isGrounded = false;
+      isJumping = true;
     }
 
     // When crouched and using toggle system, will uncrouch for a jump

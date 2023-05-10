@@ -10,7 +10,6 @@ public class PlayerAnimation : MonoBehaviour
   private float decceleration = 2f;
   private int isJumpingHash;
   private int isFallingHash;
-  private int isLandingHash;
 
   void Start()
   {
@@ -18,10 +17,9 @@ public class PlayerAnimation : MonoBehaviour
     playerControls = GetComponentInParent<PlayerControls>();
     isJumpingHash = Animator.StringToHash("isJumping");
     isFallingHash = Animator.StringToHash("isFalling");
-    isLandingHash = Animator.StringToHash("isLanding");
   }
 
-  void Update()
+  void FixedUpdate()
   {
 
     float horizontalInput = Input.GetAxis("Horizontal");
@@ -31,12 +29,6 @@ public class PlayerAnimation : MonoBehaviour
 
     bool isSprinting = playerControls.IsSprinting;
     float maxVelocity = isSprinting ? 1f : .5f;
-
-    bool groundCheck = playerControls.IsGrounded;
-    bool jumpInput = Input.GetButtonDown("Jump") && groundCheck;
-    bool isJumping = animator.GetBool(isJumpingHash);
-    bool isFalling = animator.GetBool(isFallingHash);
-    bool isLanding = animator.GetBool(isLandingHash);
 
     // Movement
     float velocityX = animator.GetFloat("velocityX");
@@ -84,21 +76,15 @@ public class PlayerAnimation : MonoBehaviour
     animator.SetFloat("velocityX", velocityX);
     animator.SetFloat("velocityY", velocityY);
 
+
     // Jumping
-    if (jumpInput && !isJumping && !isFalling)
+    if (animator.GetBool(isJumpingHash) != playerControls.IsJumping)
     {
-      animator.SetBool("isJumping", true);
-      animator.SetBool("isFalling", true);
+      animator.SetBool(isJumpingHash, playerControls.IsJumping);
     }
-    else if (isJumping)
+    if (animator.GetBool(isFallingHash) != playerControls.IsFalling)
     {
-      animator.SetBool("isJumping", false);
-      animator.SetBool("isFalling", true);
-    }
-    else if (isFalling && groundCheck)
-    {
-      animator.SetBool("isFalling", false);
-      animator.SetBool("isLanding", true);
+      animator.SetBool(isFallingHash, playerControls.IsFalling);
     }
   }
 }
