@@ -6,10 +6,8 @@ public class PlayerAnimation : MonoBehaviour
 {
   private Animator animator;
   private PlayerControls playerControls;
-  private float velocity = 0f;
   private float acceleration = 1f;
   private float decceleration = 6f;
-  private int velocityHash;
   private int isJumpingHash;
   private int isFallingHash;
   private int isLandingHash;
@@ -20,7 +18,6 @@ public class PlayerAnimation : MonoBehaviour
   {
     animator = GetComponent<Animator>();
     playerControls = GetComponentInParent<PlayerControls>();
-    velocityHash = Animator.StringToHash("velocity");
     isJumpingHash = Animator.StringToHash("isJumping");
     isFallingHash = Animator.StringToHash("isFalling");
     isLandingHash = Animator.StringToHash("isLanding");
@@ -36,18 +33,56 @@ public class PlayerAnimation : MonoBehaviour
     bool isStrafing = horizontalInput != 0;
     bool movingBackwards = verticalInput < 0;
 
-    bool movementInput = horizontalInput != 0
-      || verticalInput != 0;
-    // bool isBackwards = verticalInput < 0
-    Debug.Log(horizontalInput + " " + verticalInput);
     bool isSprinting = playerControls.IsSprinting;
-    float maxVelocity = isSprinting ? 1f : .2f;
+    float maxVelocity = isSprinting && !movingBackwards ? 1f : .5f;
 
     bool groundCheck = playerControls.IsGrounded;
     bool jumpInput = Input.GetButtonDown("Jump") && groundCheck;
     bool isJumping = animator.GetBool(isJumpingHash);
     bool isFalling = animator.GetBool(isFallingHash);
     bool isLanding = animator.GetBool(isLandingHash);
+
+    // Movement
+    float velocityX = animator.GetFloat("velocityX");
+    float velocityY = animator.GetFloat("velocityY");
+    float targetVelocityX = 0f;
+    float targetVelocityY = 0f;
+
+    if (horizontalInput != 0)
+    {
+      targetVelocityX = horizontalInput > 0 ? maxVelocity : -maxVelocity;
+    }
+
+    if (verticalInput != 0)
+    {
+      targetVelocityY = verticalInput > 0 ? maxVelocity : -maxVelocity;
+    }
+
+    if (velocityX != targetVelocityX)
+    {
+      if (targetVelocityX == 0)
+      {
+        velocityX += Time.deltaTime * decceleration * (velocityX > 0 ? -1 : 1);
+      }
+      else
+      {
+        velocityX += Time.deltaTime * acceleration * (targetVelocityX > velocityX ? 1 : -1);
+      }
+    }
+    if (velocityY != targetVelocityY)
+    {
+      if (targetVelocityY == 0)
+      {
+        velocityY += Time.deltaTime * decceleration * (velocityY > 0 ? -1 : 1);
+      }
+      else
+      {
+        velocityY += Time.deltaTime * acceleration * (targetVelocityY > velocityY ? 1 : -1);
+      }
+    }
+
+    animator.SetFloat("velocityX", velocityX);
+    animator.SetFloat("velocityY", velocityY);
 
     // Jumping
     if (jumpInput && !isJumping && !isFalling)
@@ -65,34 +100,5 @@ public class PlayerAnimation : MonoBehaviour
       animator.SetBool("isFalling", false);
       animator.SetBool("isLanding", true);
     }
-
-    // Movement
-    if (movementInput && velocity < 1f && velocity <= maxVelocity)
-    {
-      velocity += Time.deltaTime * acceleration;
-    }
-    else if (velocity > maxVelocity)
-    {
-      velocity -= Time.deltaTime * 1f;
-    }
-    else if (!movementInput && velocity > 0f)
-    {
-      velocity -= Time.deltaTime * decceleration;
-    }
-
-    if (animator.GetFloat(velocityHash) != velocity)
-    {
-      animator.SetFloat(velocityHash, movingBackwards ? 0 : Mathf.Clamp(velocity, 0, 1));
-    }
-
-    if (animator.GetBool(isMovingBackwardsHash) != movingBackwards)
-    {
-      animator.SetBool(isMovingBackwardsHash, movingBackwards);
-    }
-
-    animator.SetFloat(velocityHash, velocity);
   }
-
-
-
 }
