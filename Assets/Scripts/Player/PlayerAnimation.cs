@@ -7,7 +7,7 @@ public class PlayerAnimation : MonoBehaviour
   private Animator animator;
   private PlayerControls playerControls;
   private float acceleration = 1f;
-  private float decceleration = 6f;
+  private float decceleration = 2f;
   private int isJumpingHash;
   private int isFallingHash;
   private int isLandingHash;
@@ -26,6 +26,8 @@ public class PlayerAnimation : MonoBehaviour
 
     float horizontalInput = Input.GetAxis("Horizontal");
     float verticalInput = Input.GetAxis("Vertical");
+    bool horizontalMovement = Mathf.Abs(horizontalInput) > .05f;
+    bool verticalMovement = Mathf.Abs(verticalInput) > .05f;
 
     bool isSprinting = playerControls.IsSprinting;
     float maxVelocity = isSprinting ? 1f : .5f;
@@ -42,12 +44,12 @@ public class PlayerAnimation : MonoBehaviour
     float targetVelocityX = 0f;
     float targetVelocityY = 0f;
 
-    if (horizontalInput != 0)
+    if (horizontalMovement)
     {
       targetVelocityX = horizontalInput > 0 ? maxVelocity : -maxVelocity;
     }
 
-    if (verticalInput != 0)
+    if (verticalMovement)
     {
       targetVelocityY = verticalInput > 0 ? maxVelocity : -maxVelocity;
     }
@@ -65,7 +67,7 @@ public class PlayerAnimation : MonoBehaviour
     }
     if (velocityY != targetVelocityY)
     {
-      if (targetVelocityY == 0)
+      if (targetVelocityY == 0f)
       {
         velocityY += Time.deltaTime * decceleration * (velocityY > 0 ? -1 : 1);
       }
@@ -74,6 +76,10 @@ public class PlayerAnimation : MonoBehaviour
         velocityY += Time.deltaTime * acceleration * (targetVelocityY > velocityY ? 1 : -1);
       }
     }
+
+    // If we are stopping, cut to 0 velocity when under .05f to prevent stuttering
+    velocityX = targetVelocityX == 0f && Mathf.Abs(velocityX) < .05f ? 0f : velocityX;
+    velocityY = targetVelocityY == 0f && Mathf.Abs(velocityY) < .05f ? 0f : velocityY;
 
     animator.SetFloat("velocityX", velocityX);
     animator.SetFloat("velocityY", velocityY);
