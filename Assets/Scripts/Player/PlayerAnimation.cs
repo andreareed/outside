@@ -11,8 +11,6 @@ public class PlayerAnimation : MonoBehaviour
   private int isJumpingHash;
   private int isFallingHash;
   private int isLandingHash;
-  private int isMovingBackwardsHash;
-  private bool isStrafing;
 
   void Start()
   {
@@ -21,7 +19,6 @@ public class PlayerAnimation : MonoBehaviour
     isJumpingHash = Animator.StringToHash("isJumping");
     isFallingHash = Animator.StringToHash("isFalling");
     isLandingHash = Animator.StringToHash("isLanding");
-    isMovingBackwardsHash = Animator.StringToHash("isMovingBackwards");
   }
 
   void Update()
@@ -30,11 +27,8 @@ public class PlayerAnimation : MonoBehaviour
     float horizontalInput = Input.GetAxis("Horizontal");
     float verticalInput = Input.GetAxis("Vertical");
 
-    bool isStrafing = horizontalInput != 0;
-    bool movingBackwards = verticalInput < 0;
-
     bool isSprinting = playerControls.IsSprinting;
-    float maxVelocity = isSprinting && !movingBackwards ? 1f : .5f;
+    float maxVelocity = isSprinting ? 1f : .5f;
 
     bool groundCheck = playerControls.IsGrounded;
     bool jumpInput = Input.GetButtonDown("Jump") && groundCheck;

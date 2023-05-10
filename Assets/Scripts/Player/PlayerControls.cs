@@ -160,10 +160,11 @@ public class PlayerControls : MonoBehaviour
     float verticalInput = Input.GetAxis("Vertical");
 
     Vector3 targetVelocity = new Vector3(horizontalInput, 0, verticalInput);
+    bool isMovingBackwards = targetVelocity.z < 0;
     isWalking = targetVelocity.x != 0 || targetVelocity.z != 0 && isGrounded;
 
     // Sprinting
-    if (Input.GetKey(sprintKey) && playerStats.stamina > 0f)
+    if (Input.GetKey(sprintKey) && playerStats.stamina > 0f && !isMovingBackwards)
     {
       targetVelocity = transform.TransformDirection(targetVelocity) * sprintSpeed;
 
