@@ -55,12 +55,17 @@ public class PlayerControls : MonoBehaviour
   private bool isCrouched = false;
   private Vector3 originalScale;
 
+  // Public getters
+  public bool IsWalking => isWalking;
+  public bool IsSprinting => isSprinting;
+  public bool IsCrouched => isCrouched;
+  public bool IsGrounded => isGrounded;
+
   private void Start()
   {
     rb = GetComponent<Rigidbody>();
     playerStats = GetComponentInChildren<PlayerStats>();
     staminaDrain = playerStats.StaminaDrain;
-
 
     playerCamera.fieldOfView = fov;
     originalScale = transform.localScale;
@@ -217,7 +222,6 @@ public class PlayerControls : MonoBehaviour
 
   private void Jump()
   {
-    Debug.Log("isGrounded" + isGrounded);
     if (isGrounded)
     {
       rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);

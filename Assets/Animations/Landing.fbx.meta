@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 762fd87b2c9bc486592c914ddc0503a3
+guid: 00c4d36bab4074811aa3f82a9d15765a
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Heavy Weapon Swing
+      name: Landing
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 99
+      lastFrame: 11
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
