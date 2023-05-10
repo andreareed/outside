@@ -11,7 +11,7 @@ public class PlayerControls : MonoBehaviour
   [SerializeField] float fov = 60f;
   [SerializeField] bool invertCamera = false;
   [SerializeField] float mouseSensitivity = 2f;
-  [SerializeField] float maxLookAngle = 50f;
+  [SerializeField] float maxLookAngle = 90f;
   [SerializeField] Camera playerCamera;
 
   // Camera Internal Variables
