@@ -78,6 +78,10 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
       {
         Consume();
       }
+      else if (item.ItemType == ItemSO._ItemType.Weapon)
+      {
+        Equip();
+      }
     }
   }
 
@@ -97,6 +101,15 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
     {
       UpdateSlot();
     }
+  }
+
+  public void Equip()
+  {
+    Transform rightHand = inventoryManager.RightHand.transform;
+    GameObject weapon = Instantiate(item.Model, rightHand.position, Quaternion.Euler(item.ModelRotation), rightHand);
+
+    weapon.transform.localPosition = Vector3.zero;
+    weapon.transform.localRotation = Quaternion.Euler(item.ModelRotation);
   }
 
   public void OnPointerEnter(PointerEventData eventData)

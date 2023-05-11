@@ -13,6 +13,7 @@ public class ItemSO : ScriptableObject
   // Always update the editor script when making changes
 
   public enum _ItemType { Generic, Consumable, Weapon }
+  public enum _WeaponType { Melee, Ranged }
 
   // UI Display
   [SerializeField] _ItemType itemType;
@@ -31,11 +32,16 @@ public class ItemSO : ScriptableObject
   [SerializeField] float water = 10f;
 
   // Weapon
+  [SerializeField] _WeaponType weaponType;
   [SerializeField] float damage = 10f;
   [SerializeField] float range = 10f;
   [SerializeField] float fireRate = 1f;
   [SerializeField] float reloadTime = 1f;
   [SerializeField] int maxAmmo = 10;
+
+  // Required References
+  [SerializeField] GameObject model;
+  [SerializeField] Vector3 modelRotation;
 
   // Public getters
   public _ItemType ItemType => itemType;
@@ -49,11 +55,15 @@ public class ItemSO : ScriptableObject
   public float Food => food;
   public float Water => water;
 
+  public _WeaponType WeaponType => weaponType;
   public float Damage => damage;
   public float Range => range;
   public float FireRate => fireRate;
   public float ReloadTime => reloadTime;
   public int MaxAmmo => maxAmmo;
+
+  public GameObject Model => model;
+  public Vector3 ModelRotation => modelRotation;
 }
 
 
@@ -134,6 +144,8 @@ public class ItemSOEditor : Editor
     EditorGUILayout.PropertyField(serializedObject.FindProperty("fireRate"));
     EditorGUILayout.PropertyField(serializedObject.FindProperty("reloadTime"));
     EditorGUILayout.PropertyField(serializedObject.FindProperty("maxAmmo"));
+    EditorGUILayout.PropertyField(serializedObject.FindProperty("model"));
+    EditorGUILayout.PropertyField(serializedObject.FindProperty("modelRotation"));
   }
 }
 
