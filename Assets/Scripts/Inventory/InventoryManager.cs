@@ -14,6 +14,8 @@ public class InventoryManager : MonoBehaviour
   [SerializeField] Transform slotContainer;
   [SerializeField] Transform hotbarContainer;
   [SerializeField] GameObject dropModel;
+  [SerializeField] GameObject rightHand;
+  [SerializeField] GameObject leftHand;
 
   private Slot[] inventorySlots;
   private Slot[] hotbarSlots;
@@ -21,6 +23,8 @@ public class InventoryManager : MonoBehaviour
 
   // Public getters
   public Dictionary<string, int> AllInventoryItems => allInventoryItems;
+  public GameObject RightHand => rightHand;
+  public GameObject LeftHand => leftHand;
 
 
   private void Start()
