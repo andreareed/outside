@@ -106,6 +106,14 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
   public void Equip()
   {
     Transform rightHand = inventoryManager.RightHand.transform;
+    bool alreadyEquipped = rightHand.childCount > 0
+      && rightHand.GetChild(0).gameObject.name.Replace("(Clone)", "") == item.Model.name;
+
+    UnEquip();
+    if (alreadyEquipped)
+    {
+      return;
+    }
     GameObject weapon = Instantiate(item.Model, rightHand.position, Quaternion.Euler(item.ModelRotation), rightHand);
 
     weapon.transform.localPosition = Vector3.zero;
@@ -118,7 +126,15 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
     weaponStats.HasAmmo = item.HasAmmo;
     weaponStats.ReloadTime = item.ReloadTime;
     weaponStats.MaxAmmo = item.MaxAmmo;
+  }
 
+  private void UnEquip()
+  {
+    if (inventoryManager.RightHand.transform.childCount > 0)
+    {
+      GameObject equippedItem = inventoryManager.RightHand.transform.GetChild(0).gameObject;
+      Destroy(equippedItem);
+    }
   }
 
   public void OnPointerEnter(PointerEventData eventData)
