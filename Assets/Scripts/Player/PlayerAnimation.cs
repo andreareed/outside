@@ -6,6 +6,7 @@ public class PlayerAnimation : MonoBehaviour
 {
   private Animator animator;
   private PlayerControls playerControls;
+  private InventoryManager inventoryManager;
   private float acceleration = 1f;
   private float decceleration = 2f;
   private int isJumpingHash;
@@ -15,6 +16,7 @@ public class PlayerAnimation : MonoBehaviour
   {
     animator = GetComponent<Animator>();
     playerControls = GetComponentInParent<PlayerControls>();
+    inventoryManager = GetComponentInParent<InventoryManager>();
     isJumpingHash = Animator.StringToHash("isJumping");
     isFallingHash = Animator.StringToHash("isFalling");
   }
@@ -85,6 +87,20 @@ public class PlayerAnimation : MonoBehaviour
     if (animator.GetBool(isFallingHash) != playerControls.IsFalling)
     {
       animator.SetBool(isFallingHash, playerControls.IsFalling);
+    }
+
+    // Combat
+    if (Input.GetButtonDown("Fire1") && Cursor.lockState == CursorLockMode.Locked)
+    {
+      if (inventoryManager.RightHand.transform.childCount == 0)
+      {
+        animator.SetTrigger("punch");
+      }
+      else
+      {
+        Weapon weapon = inventoryManager.RightHand.transform.GetComponentInChildren<Weapon>();
+        weapon.Attack(animator);
+      }
     }
   }
 }
