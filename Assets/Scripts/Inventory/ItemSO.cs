@@ -43,6 +43,7 @@ public class ItemSO : ScriptableObject
 
   // Required References
   [SerializeField] GameObject model;
+  [SerializeField] Vector3 modelPosition;
   [SerializeField] Vector3 modelRotation;
 
   // Public getters
@@ -67,9 +68,9 @@ public class ItemSO : ScriptableObject
   public bool IsRanged => isRanged;
 
   public GameObject Model => model;
+  public Vector3 ModelPosition => modelPosition;
   public Vector3 ModelRotation => modelRotation;
 }
-
 
 #if UNITY_EDITOR
 [CustomEditor(typeof(ItemSO))]
@@ -157,6 +158,7 @@ public class ItemSOEditor : Editor
       EditorGUILayout.PropertyField(serializedObject.FindProperty("maxAmmo"));
     }
     EditorGUILayout.PropertyField(serializedObject.FindProperty("model"));
+    EditorGUILayout.PropertyField(serializedObject.FindProperty("modelPosition"));
     EditorGUILayout.PropertyField(serializedObject.FindProperty("modelRotation"));
   }
 }

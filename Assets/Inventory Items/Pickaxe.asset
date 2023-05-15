@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98384a5c51b72481d86930916416f2e8, type: 3}
+  m_Name: Pickaxe
+  m_EditorClassIdentifier: 
+  itemType: 2
+  icon: {fileID: 21300000, guid: c388898e681fe4ad59d35dc02ffd3079, type: 3}
+  itemName: Pickaxe
+  description: Used for breaking up stone and harvesting minerals
+  isStackable: 0
+  maxStack: 1
+  health: 10
+  food: 10
+  water: 10
+  weaponType: 0
+  damage: 10
+  isRanged: 0
+  range: 10
+  fireRate: 1
+  hasAmmo: 0
+  reloadTime: 1
+  maxAmmo: 10
+  model: {fileID: 7668752482715045109, guid: eeca85d3183414cf88881765d318cd42, type: 3}
+  modelPosition: {x: -0.204, y: -0.034, z: 0}
+  modelRotation: {x: 0, y: -90, z: 0}

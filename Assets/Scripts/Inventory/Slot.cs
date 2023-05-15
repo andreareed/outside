@@ -114,9 +114,9 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
     {
       return;
     }
-    GameObject weapon = Instantiate(item.Model, rightHand.position, Quaternion.Euler(item.ModelRotation), rightHand);
+    GameObject weapon = Instantiate(item.Model, item.ModelPosition, Quaternion.Euler(item.ModelRotation), rightHand);
 
-    weapon.transform.localPosition = Vector3.zero;
+    weapon.transform.localPosition = item.ModelPosition;
     weapon.transform.localRotation = Quaternion.Euler(item.ModelRotation);
     Weapon weaponStats = weapon.AddComponent<Weapon>();
     weaponStats.Damage = item.Damage;

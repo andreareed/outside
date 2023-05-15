@@ -23,9 +23,11 @@ MonoBehaviour:
   water: 10
   weaponType: 0
   damage: 10
-  range: 10
+  isRanged: 0
+  range: 0
   fireRate: 1
+  hasAmmo: 0
   reloadTime: 1
-  maxAmmo: 10
+  maxAmmo: 0
   model: {fileID: 6967290411674196597, guid: d2fcf510d007c497dbfb56c4bcd192b2, type: 3}
   modelRotation: {x: 0.5880046, y: 298.629, z: 16.20999}
