@@ -80,7 +80,7 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
       }
       else if (item.ItemType == ItemSO._ItemType.Weapon)
       {
-        Equip();
+        inventoryManager.Equip(item);
       }
     }
   }
@@ -100,40 +100,6 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
     else
     {
       UpdateSlot();
-    }
-  }
-
-  public void Equip()
-  {
-    Transform rightHand = inventoryManager.RightHand.transform;
-    bool alreadyEquipped = rightHand.childCount > 0
-      && rightHand.GetChild(0).gameObject.name.Replace("(Clone)", "") == item.Model.name;
-
-    UnEquip();
-    if (alreadyEquipped)
-    {
-      return;
-    }
-    GameObject weapon = Instantiate(item.Model, item.ModelPosition, Quaternion.Euler(item.ModelRotation), rightHand);
-
-    weapon.transform.localPosition = item.ModelPosition;
-    weapon.transform.localRotation = Quaternion.Euler(item.ModelRotation);
-    Weapon weaponStats = weapon.AddComponent<Weapon>();
-    weaponStats.Damage = item.Damage;
-    weaponStats.IsRanged = item.IsRanged;
-    weaponStats.Range = item.Range;
-    weaponStats.FireRate = item.FireRate;
-    weaponStats.HasAmmo = item.HasAmmo;
-    weaponStats.ReloadTime = item.ReloadTime;
-    weaponStats.MaxAmmo = item.MaxAmmo;
-  }
-
-  private void UnEquip()
-  {
-    if (inventoryManager.RightHand.transform.childCount > 0)
-    {
-      GameObject equippedItem = inventoryManager.RightHand.transform.GetChild(0).gameObject;
-      Destroy(equippedItem);
     }
   }
 
