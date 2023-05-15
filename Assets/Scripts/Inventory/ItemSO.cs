@@ -6,6 +6,13 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
+[System.Serializable]
+public class DamageModifier
+{
+  public string tag;
+  public float modifier;
+}
+
 [CreateAssetMenu(fileName = "New Item", menuName = "Game/Inventory/New Item")]
 public class ItemSO : ScriptableObject
 {
@@ -40,6 +47,7 @@ public class ItemSO : ScriptableObject
   [SerializeField] bool hasAmmo = false;
   [SerializeField] float reloadTime = 1f;
   [SerializeField] int maxAmmo = 10;
+  [SerializeField] DamageModifier[] damageModifiers;
 
   // Required References
   [SerializeField] GameObject model;
@@ -66,6 +74,7 @@ public class ItemSO : ScriptableObject
   public int MaxAmmo => maxAmmo;
   public bool HasAmmo => hasAmmo;
   public bool IsRanged => isRanged;
+  public DamageModifier[] DamageModifiers => damageModifiers;
 
   public GameObject Model => model;
   public Vector3 ModelPosition => modelPosition;
@@ -160,6 +169,7 @@ public class ItemSOEditor : Editor
     EditorGUILayout.PropertyField(serializedObject.FindProperty("model"));
     EditorGUILayout.PropertyField(serializedObject.FindProperty("modelPosition"));
     EditorGUILayout.PropertyField(serializedObject.FindProperty("modelRotation"));
+    EditorGUILayout.PropertyField(serializedObject.FindProperty("damageModifiers"));
   }
 }
 

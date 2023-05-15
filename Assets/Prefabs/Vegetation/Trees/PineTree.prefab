@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3047443773248329641}
   - component: {fileID: 3047443773247198569}
   - component: {fileID: 4914206923572626591}
-  - component: {fileID: -8677009907045031499}
+  - component: {fileID: 1913450242}
   m_Layer: 0
   m_Name: PineTree
   m_TagString: Tree
@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3047443773245262761}
-  m_LocalRotation: {x: 0.000000021855694, y: -1.1102232e-16, z: 1.1102232e-16, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 25.656689, y: 0.81173307, z: -47.492176}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -100,7 +100,7 @@ CapsuleCollider:
   m_Height: 19.764492
   m_Direction: 1
   m_Center: {x: 0.055687904, y: 9.063189, z: -0.17469311}
---- !u!114 &-8677009907045031499
+--- !u!114 &1913450242
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,8 +109,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3047443773245262761}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4781866e0b9044628243b3ac86eaa69, type: 3}
+  m_Script: {fileID: 11500000, guid: 7dda2072382644db5bbffc82a0595ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  stackSize: 0
+  resourceHealth: 100
+  harvestedModel: {fileID: 0}
+  respawnDelayMinutes: 15

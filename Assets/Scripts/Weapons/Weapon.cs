@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 #if UNITY_EDITOR
@@ -19,6 +20,7 @@ public class Weapon : MonoBehaviour
   [SerializeField] bool hasAmmo;
   [SerializeField] float reloadTime;
   [SerializeField] int maxAmmo;
+  [SerializeField] DamageModifier[] damageModifiers;
 
   private float timer = 0f;
 
@@ -31,6 +33,7 @@ public class Weapon : MonoBehaviour
   public int MaxAmmo { get => maxAmmo; set => maxAmmo = value; }
   public bool HasAmmo { get => hasAmmo; set => hasAmmo = value; }
   public bool IsRanged { get => isRanged; set => isRanged = value; }
+  public DamageModifier[] DamageModifiers { get => damageModifiers; set => damageModifiers = value; }
 
   private void Update()
   {
@@ -56,6 +59,21 @@ public class Weapon : MonoBehaviour
     timer = fireRate;
   }
 
+  public float GetDamageModifier(string itemTag)
+  {
+    DamageModifier modifier = Array.Find(damageModifiers, mod => mod.tag == itemTag);
+    return modifier != null ? modifier.modifier : 0f;
+  }
+
+
+  private void OnTriggerEnter(Collider other)
+  {
+    if (timer > 0f)
+    {
+      float modifier = GetDamageModifier(other.gameObject.tag);
+      other.gameObject.SendMessage("UpdateHealth", damage * modifier);
+    }
+  }
 }
 
 

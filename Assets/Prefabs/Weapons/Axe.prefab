@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 6967290411676189877}
   - component: {fileID: 6967290411664681397}
   - component: {fileID: -2112601947195301984}
+  - component: {fileID: -5556843500739990366}
   m_Layer: 0
   m_Name: Axe
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,14 +28,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6967290411674196597}
-  m_LocalRotation: {x: 0.067579895, y: 0.50584364, z: -0.12383755, w: -0.8510108}
+  m_LocalRotation: {x: 0.06757988, y: 0.5058435, z: -0.12383757, w: -0.85101086}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 90}
+  m_LocalEulerAnglesHint: {x: 0.588, y: 298.629, z: 16.21}
 --- !u!33 &6967290411675059829
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -120,3 +121,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 9f1810da5391ad942b0710778d90f7d2, type: 3}
+--- !u!65 &-5556843500739990366
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6967290411674196597}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.11977875, y: 0.03389743, z: 0.083688535}
+  m_Center: {x: 0.29814294, y: 0.00000073632907, z: -0.053806998}

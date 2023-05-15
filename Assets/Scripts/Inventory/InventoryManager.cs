@@ -284,6 +284,7 @@ public class InventoryManager : MonoBehaviour
     weaponStats.HasAmmo = item.HasAmmo;
     weaponStats.ReloadTime = item.ReloadTime;
     weaponStats.MaxAmmo = item.MaxAmmo;
+    weaponStats.DamageModifiers = item.DamageModifiers;
   }
 
   private void UnEquip()
@@ -293,5 +294,14 @@ public class InventoryManager : MonoBehaviour
       GameObject equippedItem = rightHand.transform.GetChild(0).gameObject;
       Destroy(equippedItem);
     }
+  }
+
+  public GameObject GetEquipped()
+  {
+    if (rightHand.transform.childCount > 0)
+    {
+      return rightHand.transform.GetChild(0).gameObject;
+    }
+    return null;
   }
 }

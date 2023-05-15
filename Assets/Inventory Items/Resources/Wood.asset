@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Wood
   m_EditorClassIdentifier: 
   itemType: 0
-  icon: {fileID: 0}
-  itemName: 
-  description: 
-  isStackable: 0
-  maxStack: 1
+  icon: {fileID: 21300000, guid: 521f898ab98ff46a489a9ff17b2b64dc, type: 3}
+  itemName: Wood
+  description: Build with it, craft it into something cool, or just burn it
+  isStackable: 1
+  maxStack: 50
   health: 10
   food: 10
   water: 10
@@ -29,6 +29,7 @@ MonoBehaviour:
   hasAmmo: 0
   reloadTime: 1
   maxAmmo: 10
+  damageModifiers: []
   model: {fileID: 0}
   modelPosition: {x: 0, y: 0, z: 0}
   modelRotation: {x: 0, y: 0, z: 0}
