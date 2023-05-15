@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 3047443773248329641}
   - component: {fileID: 3047443773247198569}
   - component: {fileID: 4914206923572626591}
+  - component: {fileID: -8677009907045031499}
   m_Layer: 0
   m_Name: PineTree
-  m_TagString: Untagged
+  m_TagString: Tree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,7 +96,21 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.6557293
+  m_Radius: 0.9393225
   m_Height: 19.764492
   m_Direction: 1
-  m_Center: {x: -0.22790527, y: 9.063189, z: -0.17469311}
+  m_Center: {x: 0.055687904, y: 9.063189, z: -0.17469311}
+--- !u!114 &-8677009907045031499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3047443773245262761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4781866e0b9044628243b3ac86eaa69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
+  stackSize: 0
