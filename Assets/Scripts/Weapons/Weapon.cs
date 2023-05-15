@@ -11,7 +11,6 @@ public enum _AttackType { heavySwing }
 
 public class Weapon : MonoBehaviour
 {
-
   [SerializeField] private _AttackType attackType;
   [SerializeField] float damage;
   [SerializeField] bool isRanged;
@@ -21,6 +20,7 @@ public class Weapon : MonoBehaviour
   [SerializeField] float reloadTime;
   [SerializeField] int maxAmmo;
 
+  private float timer = 0f;
 
   // Public setters & getters
   public _AttackType AttackType => attackType;
@@ -32,9 +32,28 @@ public class Weapon : MonoBehaviour
   public bool HasAmmo { get => hasAmmo; set => hasAmmo = value; }
   public bool IsRanged { get => isRanged; set => isRanged = value; }
 
+  private void Update()
+  {
+    if (timer > 0f)
+    {
+      timer -= Time.deltaTime;
+
+      if (timer <= 0f)
+      {
+        timer = 0f;
+
+      }
+    }
+  }
+
   public void Attack(Animator animator)
   {
+    if (timer > 0f)
+    {
+      return;
+    }
     animator.SetTrigger(attackType.ToString());
+    timer = fireRate;
   }
 
 }

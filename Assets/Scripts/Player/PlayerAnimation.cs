@@ -21,7 +21,7 @@ public class PlayerAnimation : MonoBehaviour
     isFallingHash = Animator.StringToHash("isFalling");
   }
 
-  void FixedUpdate()
+  void Update()
   {
 
     float horizontalInput = Input.GetAxis("Horizontal");
