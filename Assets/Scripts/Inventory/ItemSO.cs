@@ -34,8 +34,10 @@ public class ItemSO : ScriptableObject
   // Weapon
   [SerializeField] _WeaponType weaponType;
   [SerializeField] float damage = 10f;
+  [SerializeField] bool isRanged = false;
   [SerializeField] float range = 10f;
   [SerializeField] float fireRate = 1f;
+  [SerializeField] bool hasAmmo = false;
   [SerializeField] float reloadTime = 1f;
   [SerializeField] int maxAmmo = 10;
 
@@ -61,6 +63,8 @@ public class ItemSO : ScriptableObject
   public float FireRate => fireRate;
   public float ReloadTime => reloadTime;
   public int MaxAmmo => maxAmmo;
+  public bool HasAmmo => hasAmmo;
+  public bool IsRanged => isRanged;
 
   public GameObject Model => model;
   public Vector3 ModelRotation => modelRotation;
@@ -140,10 +144,18 @@ public class ItemSOEditor : Editor
   void DisplayWeaponInfo()
   {
     EditorGUILayout.PropertyField(serializedObject.FindProperty("damage"));
-    EditorGUILayout.PropertyField(serializedObject.FindProperty("range"));
+    EditorGUILayout.PropertyField(serializedObject.FindProperty("isRanged"));
+    if (serializedObject.FindProperty("isRanged").boolValue)
+    {
+      EditorGUILayout.PropertyField(serializedObject.FindProperty("range"));
+    }
     EditorGUILayout.PropertyField(serializedObject.FindProperty("fireRate"));
-    EditorGUILayout.PropertyField(serializedObject.FindProperty("reloadTime"));
-    EditorGUILayout.PropertyField(serializedObject.FindProperty("maxAmmo"));
+    EditorGUILayout.PropertyField(serializedObject.FindProperty("hasAmmo"));
+    if (serializedObject.FindProperty("hasAmmo").boolValue)
+    {
+      EditorGUILayout.PropertyField(serializedObject.FindProperty("reloadTime"));
+      EditorGUILayout.PropertyField(serializedObject.FindProperty("maxAmmo"));
+    }
     EditorGUILayout.PropertyField(serializedObject.FindProperty("model"));
     EditorGUILayout.PropertyField(serializedObject.FindProperty("modelRotation"));
   }

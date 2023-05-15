@@ -110,6 +110,15 @@ public class Slot : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPoin
 
     weapon.transform.localPosition = Vector3.zero;
     weapon.transform.localRotation = Quaternion.Euler(item.ModelRotation);
+    Weapon weaponStats = weapon.AddComponent<Weapon>();
+    weaponStats.Damage = item.Damage;
+    weaponStats.IsRanged = item.IsRanged;
+    weaponStats.Range = item.Range;
+    weaponStats.FireRate = item.FireRate;
+    weaponStats.HasAmmo = item.HasAmmo;
+    weaponStats.ReloadTime = item.ReloadTime;
+    weaponStats.MaxAmmo = item.MaxAmmo;
+
   }
 
   public void OnPointerEnter(PointerEventData eventData)
