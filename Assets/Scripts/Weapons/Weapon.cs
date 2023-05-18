@@ -70,10 +70,10 @@ public class Weapon : MonoBehaviour
   {
     float modifier = GetDamageModifier(other.gameObject.tag);
     bool isTerrain = other.gameObject.layer == LayerMask.NameToLayer("Terrain");
-
     if (isTerrain)
     {
-      other.gameObject.SendMessage("UpdateHealth", transform.position);
+      modifier = GetDamageModifier("Tree");
+      other.gameObject.SendMessage("UpdateHealth", damage * modifier);
     }
     else
     {
@@ -117,6 +117,8 @@ public class WeaponEditor : Editor
       EditorGUILayout.PropertyField(serializedObject.FindProperty("reloadTime"));
       EditorGUILayout.PropertyField(serializedObject.FindProperty("maxAmmo"));
     }
+
+    EditorGUILayout.PropertyField(serializedObject.FindProperty("damageModifiers"));
 
     serializedObject.ApplyModifiedProperties();
   }
