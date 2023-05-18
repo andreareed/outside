@@ -11,13 +11,33 @@ public class TerrainManager : MonoBehaviour
   void Start()
   {
     terrain = Terrain.activeTerrain;
-    terrainDataSize = Terrain.activeTerrain.terrainData.size;
     trees = new List<TreeInstance>(terrain.terrainData.treeInstances);
 
     for (int i = 0; i < terrain.terrainData.treeInstanceCount; i++)
     {
       TreeInstance tree = terrain.terrainData.GetTreeInstance(i);
       treesByPosition.TryAdd(tree.position.ToString(), new TerrainTree(i, tree.position, 100f));
+    }
+  }
+
+  public void Harvest(int index)
+  {
+    TreeInstance tree = terrain.terrainData.GetTreeInstance(index);
+    trees.Remove(tree);
+    terrain.terrainData.treeInstances = trees.ToArray();
+  }
+
+  public void UpdateHealth(Vector3 playerPosition)
+  {
+    Vector3 position = GetClosestTree(playerPosition);
+    treesByPosition.TryGetValue(position.ToString(), out TerrainTree tree);
+    if (tree != null)
+    {
+      tree.UpdateHealth(20f);
+      if (treesByPosition[position.ToString()].Health <= 0)
+      {
+        Harvest(tree.Index);
+      }
     }
   }
 
