@@ -5,6 +5,7 @@ using UnityEngine;
 public class TerrainManager : MonoBehaviour
 {
   Terrain terrain;
+  GameObject player;
   Dictionary<string, TerrainTree> treesByPosition = new Dictionary<string, TerrainTree>();
   List<TreeInstance> trees;
 
@@ -12,6 +13,7 @@ public class TerrainManager : MonoBehaviour
   {
     terrain = Terrain.activeTerrain;
     trees = new List<TreeInstance>(terrain.terrainData.treeInstances);
+    player = GameObject.Find("Player");
 
     for (int i = 0; i < terrain.terrainData.treeInstanceCount; i++)
     {
@@ -27,13 +29,13 @@ public class TerrainManager : MonoBehaviour
     terrain.terrainData.treeInstances = trees.ToArray();
   }
 
-  public void UpdateHealth(Vector3 playerPosition)
+  public void ApplyDamage(float damage)
   {
-    Vector3 position = GetClosestTree(playerPosition);
+    Vector3 position = GetClosestTree(player.transform.position);
     treesByPosition.TryGetValue(position.ToString(), out TerrainTree tree);
     if (tree != null)
     {
-      tree.UpdateHealth(20f);
+      tree.ApplyDamage(damage);
       if (treesByPosition[position.ToString()].Health <= 0)
       {
         Harvest(tree.Index);

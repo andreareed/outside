@@ -68,17 +68,10 @@ public class Weapon : MonoBehaviour
 
   private void OnTriggerEnter(Collider other)
   {
-    float modifier = GetDamageModifier(other.gameObject.tag);
-    bool isTerrain = other.gameObject.layer == LayerMask.NameToLayer("Terrain");
-    if (isTerrain)
-    {
-      modifier = GetDamageModifier("Tree");
-      other.gameObject.SendMessage("UpdateHealth", damage * modifier);
-    }
-    else
-    {
-      other.gameObject.SendMessage("UpdateHealth", damage * modifier);
-    }
+    bool isTerrainTree = other.gameObject.layer == LayerMask.NameToLayer("Terrain");
+    float modifier = GetDamageModifier(isTerrainTree ? "Tree" : other.gameObject.tag);
+
+    other.gameObject.SendMessage("ApplyDamage", damage * modifier);
   }
 }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class TerrainTree : MonoBehaviour
+public class TerrainTree
 {
   private int index;
   private Vector3 position;
@@ -23,7 +23,7 @@ public class TerrainTree : MonoBehaviour
     health = hp;
   }
 
-  public void UpdateHealth(float damage)
+  public void ApplyDamage(float damage)
   {
     health -= damage;
     if (health <= 0)
