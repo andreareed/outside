@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3499590539116900176}
   - component: {fileID: 3499590539100011516}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TerrainTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 3499590539116900180}
   - component: {fileID: 3499590539116097396}
   - component: {fileID: 3499590539114999220}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: beech_tree_01_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 3499590539116900182}
   - component: {fileID: 3499590539116097398}
   - component: {fileID: 3499590539114999222}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: beech_tree_01_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 3499590539116900184}
   - component: {fileID: 3499590539116097400}
   - component: {fileID: 3499590539114999224}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: beech_tree_01_leaves_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 3499590539116097402}
   - component: {fileID: 3499590539114999226}
   - component: {fileID: 8913490454322101713}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: beech_tree_01_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -425,7 +425,7 @@ GameObject:
   - component: {fileID: 3499590539116900188}
   - component: {fileID: 3499590539116097404}
   - component: {fileID: 3499590539114999228}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: beech_tree_01_leaves_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -508,7 +508,7 @@ GameObject:
   - component: {fileID: 3499590539116900190}
   - component: {fileID: 3499590539116097406}
   - component: {fileID: 3499590539114999230}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: beech_tree_01_leaves_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

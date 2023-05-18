@@ -21,4 +21,23 @@ public class TerrainManager : MonoBehaviour
     }
   }
 
+  private Vector3 GetClosestTree(Vector3 playerPosition)
+  {
+    Vector3 currentTreePosition;
+    float minDistance = Mathf.Infinity;
+    TreeInstance closestTree = trees[0];
+
+    for (int i = 0; i < trees.Count; i++)
+    {
+      currentTreePosition = trees[i].position;
+      float currentDistance = Vector3.Distance(playerPosition, currentTreePosition);
+      if (currentDistance < minDistance)
+      {
+        minDistance = currentDistance;
+        closestTree = trees[i];
+      }
+    }
+
+    return closestTree.position;
+  }
 }
