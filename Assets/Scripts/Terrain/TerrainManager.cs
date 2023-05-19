@@ -18,15 +18,14 @@ public class TerrainManager : MonoBehaviour
     for (int i = 0; i < terrain.terrainData.treeInstanceCount; i++)
     {
       TreeInstance tree = terrain.terrainData.GetTreeInstance(i);
-      treesByPosition.TryAdd(tree.position.ToString(), new TerrainTree(i, tree.position, 100f));
+      treesByPosition.TryAdd(tree.position.ToString(), new TerrainTree(tree));
     }
   }
 
-  public void Harvest(int index)
+  public void Harvest(TreeInstance tree)
   {
-    TreeInstance tree = terrain.terrainData.GetTreeInstance(index);
     trees.Remove(tree);
-    terrain.terrainData.treeInstances = trees.ToArray();
+    terrain.terrainData.SetTreeInstances(trees.ToArray(), true);
   }
 
   public void ApplyDamage(float damage)
@@ -36,11 +35,16 @@ public class TerrainManager : MonoBehaviour
     if (tree != null)
     {
       tree.ApplyDamage(damage);
-      if (treesByPosition[position.ToString()].Health <= 0)
+      if (tree.Health <= 0)
       {
-        Harvest(tree.Index);
+        Harvest(tree.Tree);
       }
     }
+  }
+
+  private Vector3 GetLocalTreePosition(Vector3 treePosition)
+  {
+    return Vector3.Scale(treePosition, terrain.terrainData.size) + terrain.transform.position;
   }
 
   private Vector3 GetClosestTree(Vector3 playerPosition)
@@ -51,7 +55,8 @@ public class TerrainManager : MonoBehaviour
 
     for (int i = 0; i < trees.Count; i++)
     {
-      currentTreePosition = trees[i].position;
+      currentTreePosition = GetLocalTreePosition(trees[i].position);
+
       float currentDistance = Vector3.Distance(playerPosition, currentTreePosition);
       if (currentDistance < minDistance)
       {
@@ -61,5 +66,23 @@ public class TerrainManager : MonoBehaviour
     }
 
     return closestTree.position;
+  }
+
+  private void RespawnTrees()
+  {
+    foreach (KeyValuePair<string, TerrainTree> tree in treesByPosition)
+    {
+      if (tree.Value.IsChopped)
+      {
+        trees.Add(tree.Value.Tree);
+      }
+    }
+    terrain.terrainData.SetTreeInstances(trees.ToArray(), true);
+  }
+
+  void OnApplicationQuit()
+  {
+    RespawnTrees();
+    Debug.Log("Application ending after " + Time.time + " seconds");
   }
 }
